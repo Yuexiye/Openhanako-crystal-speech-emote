@@ -1,0 +1,24 @@
+{
+  "manifestVersion": 1,
+  "id": "crystal-speech-emote",
+  "name": "晶花发言与表情系统",
+  "version": "0.1.0",
+  "description": "粉色花体英文发言格式 + 多助手表情包系统。",
+  "minAppVersion": "0.0.0",
+  "trust": "full-access",
+  "contributes": {
+    "tools": [
+      { "source": "tools/render-speech.js" },
+      { "source": "tools/pick-emote.js" },
+      { "source": "tools/open-workbench.js" }
+    ],
+    "page": {
+      "title": { "zh": "晶花发言台", "en": "Crystal Speech" },
+      "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#6aa7ff\" stroke-width=\"1.5\"><text x=\"3\" y=\"20\" font-size=\"20\">❀</text></svg>",
+      "route": "/studio"
+    }
+  },
+  "ui": {
+    "hostCapabilities": ["external.open", "clipboard.writeText"]
+  }
+}

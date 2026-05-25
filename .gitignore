@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+
+# 用户运行时数据
+data/agents.json
+
+# 用户上传的表情包
+assets/emotes/*/
