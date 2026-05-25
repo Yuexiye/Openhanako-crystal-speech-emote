@@ -15,10 +15,10 @@
     "page": {
       "title": { "zh": "晶花发言台", "en": "Crystal Speech" },
       "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#6aa7ff\" stroke-width=\"1.5\"><text x=\"3\" y=\"20\" font-size=\"20\">❀</text></svg>",
-      "route": "/studio"
+      "route": "/crystal-speech"
     }
   },
   "ui": {
-    "hostCapabilities": ["external.open", "clipboard.writeText"]
+    "hostCapabilities": ["clipboard.writeText"]
   }
 }

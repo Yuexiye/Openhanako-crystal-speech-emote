@@ -17,13 +17,15 @@ export default function (app, ctx) {
   const pluginDir = ctx.pluginDir;
 
   // ── 工作台页面 ──
-  app.get('/studio', async (c) => {
+  app.get('/crystal-speech', async (c) => {
     const htmlPath = path.join(pluginDir, '_crystal_workbench.html');
     try {
-      const html = fs.readFileSync(htmlPath, 'utf-8');
+      const theme = c.req.query('hana-theme') || 'dark';
+      let html = fs.readFileSync(htmlPath, 'utf-8');
+      html = html.replace('<body', `<body data-hana-theme="${theme.replace(/["\'`<>]/g,'')}" data-surface="page"`);
       return c.html(html);
     } catch {
-      return c.html(`<!doctype html><html><body style="background:#1a1a2e;color:#6aa7ff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:system-ui"><h1>晶花发言台</h1><p style="color:#666;font-size:13px;text-align:center;margin-top:8px">工作台文件未找到<br>请检查 _crystal_workbench.html 是否存在</p></body></html>`);
+      return c.html(`<!doctype html><html><body data-hana-theme="dark" data-surface="page" style="background:#1a1a2e;color:#6aa7ff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:system-ui"><h1>晶花发言台</h1><p style="color:#666;font-size:13px;text-align:center;margin-top:8px">工作台文件未找到<br>请检查 _crystal_workbench.html 是否存在</p></body></html>`);
     }
   });
 
