@@ -419,10 +419,14 @@ let agentsConfig = {};
 
 window.addEventListener('error', e => { window.__initError = e.message || String(e); });
 window.addEventListener('unhandledrejection', e => { window.__initError = (e.reason && e.reason.message) || String(e.reason); });
-function sendReady() { try { window.parent.postMessage({ type: 'ready' }, window.location.origin); } catch {} }
+function sendReady() { try { window.parent.postMessage({ type: 'ready' }, '*'); } catch {} }
 
-// 立即通知宿主页面就绪（必须在 await 之前发送，否则宿主超时显示加载失败）
+// 立即通知宿主（防止超时）
 sendReady();
+// 备用重试（宿主页面容器可能延迟注册监听）
+setTimeout(sendReady, 200);
+setTimeout(sendReady, 500);
+setTimeout(sendReady, 1000);
 
 async function init() {
   try {
@@ -437,6 +441,8 @@ async function init() {
     setupColorPickerSync();
     setupEventListeners();
     if (currentAgent) selectAgent(currentAgent);
+    // 内容渲染完毕，再次通知就绪
+    sendReady();
   } catch(e) { window.__initError = (e && e.message) || String(e); }
 }
 
