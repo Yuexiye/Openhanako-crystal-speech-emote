@@ -387,8 +387,9 @@ function onColorChange() {
   var s = document.getElementById('colorSecondary').value;
   var sb = document.getElementById('colorSub').value;
   var bg = document.getElementById('colorBg').value;
+  var fg = document.getElementById('colorFg').value;
   var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
-  applyTheme(p, s, sb, f, hexToRgba(p, 0.4), bg);
+  applyTheme(p, s, sb, f, hexToRgba(p, 0.4), bg, fg);
   updatePreview();
 }
 function hexToRgba(h, a) {
@@ -483,6 +484,7 @@ document.getElementById('saveBtn').addEventListener('click', async function() {
   var s = document.getElementById('colorSecondary').value;
   var sb = document.getElementById('colorSub').value;
   var bg = document.getElementById('colorBg').value;
+  var fg = document.getElementById('colorFg').value;
   var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
   var cnFont = document.querySelector('#cnFontGroup .btn.active') ? document.querySelector('#cnFontGroup .btn.active').dataset.cnfont : 'system-ui,sans-serif';
   var enSize = document.getElementById('enSizeSelect').value;
