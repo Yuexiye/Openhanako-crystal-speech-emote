@@ -98,7 +98,7 @@ html, body {
 .deco { color:var(--accent2,#ff8a9a); font-size:17px; margin-right:4px; }
 .crystal {
   color:var(--accent,#ff314f);
-  font-family:var(--font,'Dancing Script',cursive);
+  font-family:var(--font,'Segoe Script','Brush Script MT','Dancing Script',cursive);
   font-size:24px; font-weight:600; font-style:italic;
   letter-spacing:.5px; line-height:1.5;
   text-decoration-line:underline; text-decoration-color:var(--accent,#ff314f);
@@ -188,26 +188,26 @@ html, body {
 <div class="layout">
 
   <div class="topbar">
-    <span class="topbar-label">Agent</span>
+    <span class="topbar-label">&#x9B3C;&#x624B;</span>
     <div class="btn-group" id="agentGroup"></div>
   </div>
 
   <div class="preview-zone">
-    <div class="bubble" id="bubble"><div class="ph">Edit content below for live preview</div></div>
+    <div class="bubble" id="bubble"><div class="ph">&#x7F16;&#x8F91;&#x4E0B;&#x65B9;&#x5185;&#x5BB9;&#xFF0C;&#x5B9E;&#x65F6;&#x9884;&#x89C8;&#x82B1;&#x4F53;&#x6548;&#x679C;</div></div>
     <div class="output-strip">
       <div>
         <div class="code-label">LaTeX</div>
-        <div class="code-block" id="latexOut">Waiting for input...</div>
-        <button class="btn-copy" id="copyLatex">Copy</button>
+        <div class="code-block" id="latexOut">&#x7B49;&#x5F85;&#x8F93;&#x5165;</div>
+        <button class="btn-copy" id="copyLatex">&#x590D;&#x5236;</button>
       </div>
       <div>
-        <div class="code-label">Plain Text</div>
-        <div class="code-block" id="textOut">Waiting for input...</div>
-        <button class="btn-copy" id="copyText">Copy</button>
+        <div class="code-label">&#x7EAF;&#x6587;&#x672C;</div>
+        <div class="code-block" id="textOut">&#x7B49;&#x5F85;&#x8F93;&#x5165;</div>
+        <button class="btn-copy" id="copyText">&#x590D;&#x5236;</button>
       </div>
       <div>
         <div class="code-label">&nbsp;</div>
-        <button class="btn-save" id="saveBtn">Save Config</button>
+        <button class="btn-save" id="saveBtn">&#x4FDD;&#x5B58;&#x914D;&#x7F6E;</button>
       </div>
     </div>
   </div>
@@ -216,7 +216,7 @@ html, body {
 
     <div class="panel">
       <div class="card">
-        <div class="card-title">Colors</div>
+        <div class="card-title">&#x989C;&#x8272;</div>
         <div class="color-row">
           <div class="field"><label>Primary</label><input type="text" id="colorPrimary" value="#ff314f"></div>
           <div class="color-swatch"><input type="color" id="colorPrimaryPicker" value="#ff314f"></div>
@@ -232,7 +232,7 @@ html, body {
       </div>
 
       <div class="card">
-        <div class="card-title">English Font</div>
+        <div class="card-title">&#x82F1;&#x6587;&#x5B57;&#x4F53;</div>
         <div class="font-grid" id="fontGroup">
           <button class="btn active" data-font="'Dancing Script','Brush Script MT',cursive">Dancing Script</button>
           <button class="btn" data-font="'Great Vibes','Dancing Script',cursive">Great Vibes</button>
@@ -245,7 +245,7 @@ html, body {
       </div>
 
       <div class="card">
-        <div class="card-title">Chinese Font</div>
+        <div class="card-title">&#x4E2D;&#x6587;&#x5B57;&#x4F53;</div>
         <div class="font-grid" id="cnFontGroup">
           <button class="btn active" data-cnfont="system-ui,sans-serif">System Default</button>
           <button class="btn" data-cnfont="'SimSun',serif">SimSun</button>
@@ -257,10 +257,10 @@ html, body {
       </div>
 
       <div class="card">
-        <div class="card-title">Size & Decoration</div>
+        <div class="card-title">&#x5B57;&#x53F7; &amp; &#x88C5;&#x9970;</div>
         <div style="display:flex;gap:6px">
           <div class="field" style="flex:1">
-            <label>EN Size</label>
+            <label>&#x82F1;&#x6587;&#x5B57;&#x53F7;</label>
             <select id="enSizeSelect">
               <option value="tiny">Tiny</option>
               <option value="small">Small</option>
@@ -271,7 +271,7 @@ html, body {
             </select>
           </div>
           <div class="field" style="flex:1">
-            <label>CN Size</label>
+            <label>&#x4E2D;&#x6587;&#x5B57;&#x53F7;</label>
             <select id="cnSizeSelect">
               <option value="tiny">Tiny</option>
               <option value="small" selected>Small</option>
@@ -281,7 +281,7 @@ html, body {
             </select>
           </div>
         </div>
-        <div class="card-title" style="margin-top:6px">Decoration</div>
+        <div class="card-title" style="margin-top:6px">&#x88C5;&#x9970;&#x7B26;</div>
         <div class="btn-group deco-strip" id="decoGroup">
           <button class="btn active" data-deco="&#10048;">&#10048;</button>
           <button class="btn" data-deco="&#10022;">&#10022;</button>
@@ -297,14 +297,14 @@ html, body {
 
     <div class="panel">
       <div class="card">
-        <div class="card-title">Speech Input</div>
-        <div class="field"><label>Tone/Emotion</label><input type="text" id="toneInput" placeholder="e.g. happy, serious, soft"></div>
-        <div class="field"><label>English</label><input type="text" id="enInput" placeholder="English text to display"></div>
-        <div class="field"><label>Chinese Annotation</label><input type="text" id="cnInput" placeholder="Chinese translation/comment"></div>
+        <div class="card-title">&#x8BF4;&#x8BDD;&#x8F93;&#x5165;</div>
+        <div class="field"><label>&#x8BED;&#x6C14;</label><input type="text" id="toneInput" placeholder="&#x5982;&#xFF1A;&#x5F00;&#x5FC3;&#x3001;&#x4E0D;&#x723D;&#x3001;&#x8C03;&#x4F83;"></div>
+        <div class="field"><label>&#x82F1;&#x6587;</label><input type="text" id="enInput" placeholder="&#x8981;&#x663E;&#x793A;&#x7684;&#x82F1;&#x6587;&#x53E5;&#x5B50;"></div>
+        <div class="field"><label>&#x4E2D;&#x6587;</label><input type="text" id="cnInput" placeholder="&#x4E2D;&#x6587;&#x6CE8;&#x91CA;/&#x7FFB;&#x8BD1;"></div>
       </div>
 
       <div class="card">
-        <div class="card-title">Tone Mapping</div>
+        <div class="card-title">&#x8BED;&#x6C14;&#x6620;&#x5C04;</div>
         <table class="tone-table">
           <thead><tr><th>Tone</th><th>Emote ID</th></tr></thead>
           <tbody id="toneBody"><tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">No mapping yet</td></tr></tbody>
@@ -316,9 +316,9 @@ html, body {
       </div>
 
       <div class="card">
-        <div class="card-title">Emotes</div>
+        <div class="card-title">&#x8868;&#x60C5;&#x5305;</div>
         <div class="emote-strip" id="emoteStrip"></div>
-        <div class="emote-hint"><strong>Tip:</strong> Click the + button on any emote slot to upload a custom image</div>
+        <div class="emote-hint"><strong>&#x63D0;&#x793A;&#xFF1A;</strong> &#x70B9;&#x51FB;&#x6BCF;&#x4E2A;&#x8868;&#x60C5;&#x69FD;&#x4F4D;&#x4E0A;&#x7684; + &#x6309;&#x94AE;&#x4E0A;&#x4F20;&#x81EA;&#x5B9A;&#x4E49;&#x56FE;&#x7247;</div>
       </div>
     </div>
 
@@ -644,16 +644,16 @@ function updatePreview() {
   var bubble = document.getElementById('bubble');
 
   if (!en && !cn) {
-    bubble.innerHTML = '<div class="ph">Edit content below for live preview</div>';
-    document.getElementById('latexOut').textContent = 'Waiting for input...';
-    document.getElementById('textOut').textContent = 'Waiting for input...';
+    bubble.innerHTML = '<div class="ph">&#x7F16;&#x8F91;&#x4E0B;&#x65B9;&#x5185;&#x5BB9;&#xFF0C;&#x5B9E;&#x65F6;&#x9884;&#x89C8;&#x82B1;&#x4F53;&#x6548;&#x679C;</div>';
+    document.getElementById('latexOut').textContent = '&#x7B49;&#x5F85;&#x8F93;&#x5165;';
+    document.getElementById('textOut').textContent = '等待输入';
     return;
   }
   var displayEn = en || '(english)';
   var displayCn = cn || '(annotation)';
   var gVal = hexToRgba(p, 0.4);
 
-  bubble.innerHTML = '<p><span class="deco" style="color:' + s + '">' + deco + '</span><span class="crystal" style="color:' + p + ';font-family:' + f + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + '">' + escHtml(displayEn) + '</span></p><div class="sub" style="color:' + sb + '">' + escHtml(displayCn) + '</div>';
+  bubble.innerHTML = '<p><span class="deco" style="color:' + s + ';font-size:24px">' + deco + '</span><span class="crystal" style="color:' + p + ';font-family:' + f + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + ';font-size:26px">' + escHtml(displayEn) + '</span></p><div class="sub" style="color:' + sb + ';font-size:14px">' + escHtml(displayCn) + '</div>';
 
   var enSize = document.getElementById('enSizeSelect').value;
   var cnSize = document.getElementById('cnSizeSelect').value;
@@ -667,7 +667,7 @@ document.getElementById('copyText').addEventListener('click', function() { doCop
 
 function doCopy(id) {
   var text = document.getElementById(id).textContent;
-  if (text === 'Waiting for input...') return;
+  if (text === '等待输入') return;
   navigator.clipboard.writeText(text).then(function() { showToast('Copied!'); });
 }
 
