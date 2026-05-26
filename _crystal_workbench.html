@@ -383,11 +383,15 @@ function setupColorPickerSync() {
   });
 }
 function onColorChange() {
-  var p = document.getElementById('colorPrimary').value;
-  var s = document.getElementById('colorSecondary').value;
-  var sb = document.getElementById('colorSub').value;
-  var bg = document.getElementById('colorBg').value;
-  var fg = document.getElementById('colorFg').value;
+  var elP = document.getElementById('colorPrimary');
+  var elS = document.getElementById('colorSecondary');
+  var elSb = document.getElementById('colorSub');
+  var elBg = document.getElementById('colorBg');
+  var elFg = document.getElementById('colorFg');
+  if (!elP || !elS || !elSb) return;
+  var p = elP.value, s = elS.value, sb = elSb.value;
+  var bg = elBg ? elBg.value : '#1a1a2e';
+  var fg = elFg ? elFg.value : '#dddddd';
   var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
   applyTheme(p, s, sb, f, hexToRgba(p, 0.4), bg, fg);
   updatePreview();
