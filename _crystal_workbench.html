@@ -643,14 +643,9 @@ function updatePreview() {
   var cn = document.getElementById('cnInput').value.trim();
   var bubble = document.getElementById('bubble');
 
-  if (!en && !cn) {
-    bubble.innerHTML = '<div class="ph">&#x7F16;&#x8F91;&#x4E0B;&#x65B9;&#x5185;&#x5BB9;&#xFF0C;&#x5B9E;&#x65F6;&#x9884;&#x89C8;&#x82B1;&#x4F53;&#x6548;&#x679C;</div>';
-    document.getElementById('latexOut').textContent = '等待输入';
-    document.getElementById('textOut').textContent = '等待输入';
-    return;
-  }
-  var displayEn = en || '(english)';
-  var displayCn = cn || '(annotation)';
+
+  var displayEn = en || 'Hello, world.';
+  var displayCn = cn || '你好，世界';
   var gVal = hexToRgba(p, 0.4);
 
   bubble.innerHTML = '<p><span class="deco" style="color:' + s + ';font-size:24px">' + deco + '</span><span class="crystal" style="color:' + p + ';font-family:' + f + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + ';font-size:26px">' + escHtml(displayEn) + '</span></p><div class="sub" style="color:' + sb + ';font-size:14px">' + escHtml(displayCn) + '</div>';
