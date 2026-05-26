@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "crystal-speech-emote",
   "name": "晶花发言与表情系统",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "粉色花体英文发言格式 + 多助手表情包系统。",
   "minAppVersion": "0.0.0",
   "trust": "full-access",
