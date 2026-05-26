@@ -190,6 +190,7 @@ function selectAgent(id){
   document.getElementById('enSizeSelect').value=(theme&&theme.enSize)?theme.enSize:fontTheme.enSize
   document.getElementById('cnSizeSelect').value=(theme&&theme.cnSize)?theme.cnSize:fontTheme.cnSize
   if(theme&&theme.deco)document.querySelectorAll('#decoGroup .btn').forEach(function(b){b.classList.toggle('active',b.dataset.deco===theme.deco)})
+  renderToneMap(id)
   applyCurrentTheme()
   var p=theme&&theme.primary?theme.primary:null
   var s=theme&&theme.secondary?theme.secondary:null
