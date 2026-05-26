@@ -22,6 +22,7 @@ export default function (app, ctx) {
     try {
       const theme = c.req.query('hana-theme') || 'dark';
       let html = fs.readFileSync(htmlPath, 'utf-8');
+      // 注入 data 属性（Hanako 页面容器要求）
       html = html.replace('<body', `<body data-hana-theme="${theme.replace(/["\'`<>]/g,'')}" data-surface="page"`);
       return c.html(html);
     } catch {
