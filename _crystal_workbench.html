@@ -333,7 +333,7 @@ function hanaUrl(path) {
 }
 
 const DEFAULT_THEME = {
-  primary:'#6aa7ff', secondary:'#b8d7ff', subColor:'#b0b0b0',
+  primary:'#6aa7ff', secondary:'#b8d7ff', subColor:'#b0b0b0', bgColor:'#1a1a2e',
   font:"'Dancing Script','Brush Script MT',cursive", cnFont:'system-ui,sans-serif',
   enSize:'large', cnSize:'small'
 };
@@ -414,8 +414,9 @@ function selectAgent(id) {
   var sb = theme && theme.subColor ? theme.subColor : dt.subColor;
   var f = theme && theme.font ? theme.font : dt.font;
   var gVal = theme && theme.primaryGlow ? theme.primaryGlow : hexToRgba(p, 0.4);
-  applyTheme(p, s, sb, f, gVal);
-  syncColorInputs(p, s, sb);
+  var bg = theme && theme.bgColor ? theme.bgColor : '#1a1a2e';
+  applyTheme(p, s, sb, f, gVal, bg);
+  syncColorInputs(p, s, sb, bg);
   updateFontSelection(f);
   if (theme && theme.cnFont) {
     document.documentElement.style.setProperty('--cnfont', theme.cnFont);
@@ -604,6 +605,7 @@ document.getElementById('saveBtn').addEventListener('click', async function() {
     enSize: enSize,
     cnSize: cnSize,
     subColor: sb,
+    bgColor: document.getElementById('colorBg').value,
     deco: document.querySelector('#decoGroup .btn.active') ? document.querySelector('#decoGroup .btn.active').dataset.deco : '&#10048;'
   };
   agentsConfig[currentAgent].toneMap = collectToneMap();
