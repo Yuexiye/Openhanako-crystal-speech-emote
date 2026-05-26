@@ -651,20 +651,12 @@ function updatePreview() {
   var displayCn = cn || '你好，世界';
   var gVal = hexToRgba(p, 0.4);
 
-  // get cn font from active button
-  var cnF = document.querySelector('#cnFontGroup .btn.active') ? document.querySelector('#cnFontGroup .btn.active').dataset.cnfont : 'system-ui,sans-serif';
-  // show debug
-  var eb = document.getElementById('__initError');
-  if (eb) { eb.textContent = 'cnFont: ' + cnF; eb.style.display = 'block';
-    setTimeout(function(){ eb.style.display = 'none'; }, 3000); }
-  // rebuild bubble
-  bubble.innerHTML = '<p><span class="deco" style="color:' + s + ';font-size:24px">' + deco + '</span><span class="crystal" style="color:' + p + ';font-family:' + f + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + ';font-size:26px">' + escHtml(displayEn) + '</span></p><div class="sub" style="color:' + sb + ';font-size:14px">' + escHtml(displayCn) + '</div>';
-  // apply cn font
-  var subEl = bubble.querySelector('.sub');
-  if (subEl) {
-    subEl.style.setProperty('font-family', cnF, 'important');
-    // also set on container
-    bubble.style.setProperty('font-family', cnF, 'important');
+  // rebuild bubble without font-family in innerHTML
+  bubble.innerHTML = '<p><span class="deco" style="color:' + s + ';font-size:24px">' + deco + '</span><span class="crystal" style="color:' + p + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + ';font-size:26px">' + escHtml(displayEn) + '</span></p><div style="color:' + sb + ';font-size:14px">' + escHtml(displayCn) + '</div>';
+  // apply Comic Sans via JS DOM API directly
+  var allSpans = bubble.querySelectorAll('span, div, p');
+  for (var i = 0; i < allSpans.length; i++) {
+    allSpans[i].style.fontFamily = 'Arial,Helvetica,sans-serif';
   }
 
   var enSize = document.getElementById('enSizeSelect').value;
