@@ -151,6 +151,27 @@ function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;'
 function escStyle(s){return String(s).replace(/["'`<>]/g,'')}
 function escLatex(s){s=String(s);s=s.replace(/\\/g,'\\textbackslash{}');s=s.replace(/_/g,'\\_');s=s.replace(/&/g,'\\&');s=s.replace(/%/g,'\\%');s=s.replace(/\$/g,'\\$');s=s.replace(/#/g,'\\#');s=s.replace(/{/g,'\\{');s=s.replace(/}/g,'\\}');s=s.replace(/~/g,'\\textasciitilde{}');s=s.replace(/\^/g,'\\textasciicircum{}');return s}
 function showToast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2000)}
+function renderEmoteStrip(id){
+  var conf=agentsConfig[id],strip=document.getElementById('emoteStrip')
+  var tone=document.getElementById('toneInput').value
+  var atm=agentsConfig[currentAgent]&&agentsConfig[currentAgent].toneMap?agentsConfig[currentAgent].toneMap:{}
+  var activeId=atm[tone]||Object.values(atm)[0]||'happy'
+  var toneIds=[...new Set(Object.values(atm))]
+  var emoteList=toneIds.length>0?toneIds.map(function(i){return{id:i,emoji:'🖼',label:i}}):[{id:'happy',emoji:'😊',label:'开心'},{id:'angry',emoji:'😤',label:'不爽'},{id:'smirk',emoji:'😏',label:'调侃'},{id:'serious',emoji:'🤔',label:'认真'},{id:'soft',emoji:'🤗',label:'温柔'}]
+  var emotes=conf&&conf.emotes?conf.emotes:{}
+  strip.innerHTML=emoteList.map(function(e){
+    var a=e.id===activeId,h=emotes[e.id]
+    return'<div class="emote-slot'+(a?' active':'')+'"'+(a?' style="border-color:var(--accent);color:var(--accent)"':'')+'>'+(h?'<img src="'+escAttr(API+'/'+emotes[e.id])+'">':'<span class="emoji">'+e.emoji+'</span>')+'<input type="file" accept="image/png,image/jpeg" style="display:none" data-agent="'+escAttr(id)+'" data-tone="'+escAttr(e.id)+'"><span class="emote-upload" onclick="this.previousElementSibling.click()">+</span></div>'
+  }).join('')
+  strip.querySelectorAll('input[type="file"]').forEach(function(input){
+    input.addEventListener('change',async function(ev){
+      var file=ev.target.files[0];if(!file)return
+      var aid=input.dataset.agent,tid=input.dataset.tone,fd=new FormData()
+      fd.append('agentId',aid);fd.append('toneId',tid);fd.append('file',file)
+      try{var r=await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/upload-emote'),{method:'POST',body:fd});var res=await r.json();if(res.ok){showToast(tid+' 上传成功');await loadConfig();renderEmoteStrip(currentAgent);updatePreview()}else showToast('上传失败: '+(res.error||'未知'))}catch(err){showToast('错误: '+err.message)}
+    })
+  })
+}
 function updatePreview(){
   var t=THEMES[activeTheme]||THEMES.dark
   var p=document.getElementById('colorPrimary').value||t.primary
@@ -166,6 +187,7 @@ function updatePreview(){
   var enS=document.getElementById('enSizeSelect').value,cnS=document.getElementById('cnSizeSelect').value
   document.getElementById('latexOut').textContent='$${\\'+enS+' \\textcolor{'+s+'}{\\text{'+deco+'}} \\underset{\\textcolor{'+sb+'}{\\text{\\'+cnS+' '+escLatex(dCn)+'}}}{\\textcolor{'+p+'}{\\underline{\\mathscr{'+escLatex(dEn)+'}}}}$$'
   document.getElementById('textOut').textContent=deco+' '+dEn+'\n--- '+dCn
+  if(currentAgent)renderEmoteStrip(currentAgent)
 }
 
 function renderTopbar(){
