@@ -9,7 +9,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body {
   height:100vh; overflow:hidden;
-  background:#1a1a2e; color:#ddd; font-family:system-ui,sans-serif;
+  background:var(--bg,#1a1a2e); color:#ddd; font-family:system-ui,sans-serif;
 }
 .layout { display:flex; flex-direction:column; height:100vh; max-width:1400px; margin:0 auto; }
 .topbar {
@@ -18,7 +18,7 @@ html, body {
   background:rgba(255,255,255,0.02);
   border-bottom:1px solid rgba(255,255,255,0.05);
 }
-.topbar-label { font-size:10px; color:#666; letter-spacing:1px; margin-right:6px; text-transform:uppercase; }
+.topbar-label { font-size:10px; color:#666; letter-spacing:1px; margin-right:6px; }
 .preview-zone {
   flex:0 0 auto; padding:10px 20px 6px;
   border-bottom:1px solid rgba(255,255,255,0.04);
@@ -40,7 +40,7 @@ html, body {
 }
 .card-title {
   font-size:10px; color:#666; letter-spacing:1px;
-  margin-bottom:6px; text-transform:uppercase;
+  margin-bottom:6px;
 }
 .btn-group { display:flex; flex-wrap:wrap; gap:4px; }
 .btn {
@@ -64,13 +64,8 @@ html, body {
   overflow:hidden; text-overflow:ellipsis;
 }
 .deco-strip { display:flex; gap:3px; flex-wrap:wrap; }
-.deco-btn {
-  width:30px; height:30px; padding:0;
-  display:flex; align-items:center; justify-content:center;
-  font-size:16px; border-radius:6px;
-}
 .field { margin-bottom:4px; }
-.field label { display:block; font-size:9px; color:#666; margin-bottom:2px; letter-spacing:.5px; }
+.field label { display:block; font-size:9px; color:#666; margin-bottom:2px; }
 .field input, .field select, .field textarea {
   width:100%; background:#16162a; border:1px solid #2a2a3a;
   border-radius:6px; padding:4px 7px; font-size:12px; color:#ddd; outline:none;
@@ -100,7 +95,6 @@ html, body {
 .deco { color:var(--accent2,#ff8a9a); font-size:17px; margin-right:4px; }
 .crystal {
   color:var(--accent,#ff314f);
-  font-family:var(--font,'Segoe Script','Brush Script MT','Dancing Script',cursive);
   font-size:24px; font-weight:600; font-style:italic;
   letter-spacing:.5px; line-height:1.5;
   text-decoration-line:underline; text-decoration-color:var(--accent,#ff314f);
@@ -118,7 +112,7 @@ html, body {
   background:#16162a; border:1px solid #2a2a3a; border-radius:6px;
   padding:5px 8px; font-family:'Consolas',monospace; font-size:10px;
   color:#7a7a9a; word-break:break-all; line-height:1.5;
-  max-height:36px; overflow:hidden; text-overflow:ellipsis;
+  max-height:36px; overflow:hidden;
   white-space:nowrap;
 }
 .code-label { font-size:9px; color:#555; margin-bottom:2px; }
@@ -183,57 +177,31 @@ html, body {
 </style>
 </head>
 <body>
-
 <div id="__initError" style="display:none;background:#ff314f;color:#fff;padding:8px 14px;font-size:12px;font-family:monospace"></div>
-
 <div class="layout">
-
   <div class="topbar">
-    <span class="topbar-label">&#x52A9;&#x624B;</span>
+    <span class="topbar-label">助手</span>
     <div class="btn-group" id="agentGroup"></div>
   </div>
-
   <div class="preview-zone">
-    <div class="bubble" id="bubble"><div class="ph">&#x7F16;&#x8F91;&#x4E0B;&#x65B9;&#x5185;&#x5BB9;&#xFF0C;&#x5B9E;&#x65F6;&#x9884;&#x89C8;&#x82B1;&#x4F53;&#x6548;&#x679C;</div></div>
+    <div class="bubble" id="bubble"><div class="ph">编辑下方内容，实时预览花体效果</div></div>
     <div class="output-strip">
-      <div>
-        <div class="code-label">LaTeX</div>
-        <div class="code-block" id="latexOut">&#x7B49;&#x5F85;&#x8F93;&#x5165;</div>
-        <button class="btn-copy" id="copyLatex">&#x590D;&#x5236;</button>
-      </div>
-      <div>
-        <div class="code-label">&#x7EAF;&#x6587;&#x672C;</div>
-        <div class="code-block" id="textOut">&#x7B49;&#x5F85;&#x8F93;&#x5165;</div>
-        <button class="btn-copy" id="copyText">&#x590D;&#x5236;</button>
-      </div>
-      <div>
-        <div class="code-label">&nbsp;</div>
-        <button class="btn-save" id="saveBtn">&#x4FDD;&#x5B58;&#x914D;&#x7F6E;</button>
-      </div>
+      <div><div class="code-label">LaTeX</div><div class="code-block" id="latexOut">等待输入</div><button class="btn-copy" id="copyLatex">复制</button></div>
+      <div><div class="code-label">纯文本</div><div class="code-block" id="textOut">等待输入</div><button class="btn-copy" id="copyText">复制</button></div>
+      <div><div class="code-label">&nbsp;</div><button class="btn-save" id="saveBtn">保存配置</button></div>
     </div>
   </div>
-
   <div class="bottom">
-
     <div class="panel">
       <div class="card">
-        <div class="card-title">&#x989C;&#x8272;</div>
-        <div class="color-row">
-          <div class="field"><label>Primary</label><input type="text" id="colorPrimary" value="#ff314f"></div>
-          <div class="color-swatch"><input type="color" id="colorPrimaryPicker" value="#ff314f"></div>
-        </div>
-        <div class="color-row" style="margin-top:3px">
-          <div class="field"><label>Secondary</label><input type="text" id="colorSecondary" value="#ff8a9a"></div>
-          <div class="color-swatch"><input type="color" id="colorSecondaryPicker" value="#ff8a9a"></div>
-        </div>
-        <div class="color-row" style="margin-top:3px">
-          <div class="field"><label>Sub Color</label><input type="text" id="colorSub" value="#b0b0b0"></div>
-          <div class="color-swatch"><input type="color" id="colorSubPicker" value="#b0b0b0"></div>
-        </div>
+        <div class="card-title">颜色</div>
+        <div class="color-row"><div class="field"><label>主题色</label><input type="text" id="colorPrimary" value="#ff314f"></div><div class="color-swatch"><input type="color" id="colorPrimaryPicker" value="#ff314f"></div></div>
+        <div class="color-row" style="margin-top:3px"><div class="field"><label>浅色</label><input type="text" id="colorSecondary" value="#ff8a9a"></div><div class="color-swatch"><input type="color" id="colorSecondaryPicker" value="#ff8a9a"></div></div>
+        <div class="color-row" style="margin-top:3px"><div class="field"><label>注释色</label><input type="text" id="colorSub" value="#b0b0b0"></div><div class="color-swatch"><input type="color" id="colorSubPicker" value="#b0b0b0"></div></div>
+        <div class="color-row" style="margin-top:3px"><div class="field"><label>背景色</label><input type="text" id="colorBg" value="#1a1a2e"></div><div class="color-swatch"><input type="color" id="colorBgPicker" value="#1a1a2e"></div></div>
       </div>
-
       <div class="card">
-        <div class="card-title">&#x82F1;&#x6587;&#x5B57;&#x4F53;</div>
+        <div class="card-title">英文字体</div>
         <div class="font-grid" id="fontGroup">
           <button class="btn active" data-font="'Dancing Script','Brush Script MT',cursive">Dancing Script</button>
           <button class="btn" data-font="'Great Vibes','Dancing Script',cursive">Great Vibes</button>
@@ -244,46 +212,25 @@ html, body {
           <button class="btn" data-font="'Arizonia','Great Vibes',cursive">Arizonia</button>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-title">&#x4E2D;&#x6587;&#x5B57;&#x4F53;</div>
+        <div class="card-title">中文字体</div>
         <div class="font-grid" id="cnFontGroup">
-          <button class="btn active" data-cnfont="system-ui,sans-serif">System Default</button>
-          <button class="btn" data-cnfont="SimSun,serif">SimSun</button>
-          <button class="btn" data-cnfont="SimHei,sans-serif">SimHei</button>
-          <button class="btn" data-cnfont="KaiTi,serif">KaiTi</button>
-          <button class="btn" data-cnfont="&quot;Microsoft YaHei&quot;,sans-serif">Microsoft YaHei</button>
-          <button class="btn" data-cnfont="FangSong,serif">FangSong</button>
+          <button class="btn active" data-cnfont="system-ui,sans-serif">默认</button>
+          <button class="btn" data-cnfont="SimSun,serif">宋体</button>
+          <button class="btn" data-cnfont="SimHei,sans-serif">黑体</button>
+          <button class="btn" data-cnfont="KaiTi,serif">楷体</button>
+          <button class="btn" data-cnfont="'Microsoft YaHei',sans-serif">微软雅黑</button>
+          <button class="btn" data-cnfont="FangSong,serif">仿宋</button>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-title">&#x5B57;&#x53F7; &amp; &#x88C5;&#x9970;</div>
+        <div class="card-title">字号 & 装饰</div>
         <div style="display:flex;gap:6px">
-          <div class="field" style="flex:1">
-            <label>&#x82F1;&#x6587;&#x5B57;&#x53F7;</label>
-            <select id="enSizeSelect">
-              <option value="tiny">Tiny</option>
-              <option value="small">Small</option>
-              <option value="normalsize">Normal</option>
-              <option value="large" selected>Large</option>
-              <option value="LARGE">LARGE</option>
-              <option value="huge">Huge</option>
-            </select>
-          </div>
-          <div class="field" style="flex:1">
-            <label>&#x4E2D;&#x6587;&#x5B57;&#x53F7;</label>
-            <select id="cnSizeSelect">
-              <option value="tiny">Tiny</option>
-              <option value="small" selected>Small</option>
-              <option value="normalsize">Normal</option>
-              <option value="large">Large</option>
-              <option value="scriptsize">Script</option>
-            </select>
-          </div>
+          <div class="field" style="flex:1"><label>英文字号</label><select id="enSizeSelect"><option value="tiny">极小</option><option value="small">小</option><option value="normalsize">正常</option><option value="large" selected>大</option><option value="LARGE">最大</option><option value="huge">超大</option></select></div>
+          <div class="field" style="flex:1"><label>中文字号</label><select id="cnSizeSelect"><option value="tiny">极小</option><option value="small" selected>小</option><option value="normalsize">正常</option><option value="large">大</option><option value="scriptsize">脚注</option></select></div>
         </div>
-        <div class="card-title" style="margin-top:6px">&#x88C5;&#x9970;&#x7B26;</div>
-        <div class="btn-group deco-strip" id="decoGroup">
+        <div class="card-title" style="margin-top:6px">装饰符</div>
+        <div class="btn-group" id="decoGroup">
           <button class="btn active" data-deco="&#10048;">&#10048;</button>
           <button class="btn" data-deco="&#10022;">&#10022;</button>
           <button class="btn" data-deco="&#9825;">&#9825;</button>
@@ -295,53 +242,39 @@ html, body {
         </div>
       </div>
     </div>
-
     <div class="panel">
       <div class="card">
-        <div class="card-title">&#x8BF4;&#x8BDD;&#x8F93;&#x5165;</div>
-        <div class="field"><label>&#x8BED;&#x6C14;</label><input type="text" id="toneInput" placeholder="&#x5982;&#xFF1A;&#x5F00;&#x5FC3;&#x3001;&#x4E0D;&#x723D;&#x3001;&#x8C03;&#x4F83;"></div>
-        <div class="field"><label>&#x82F1;&#x6587;</label><input type="text" id="enInput" placeholder="&#x8981;&#x663E;&#x793A;&#x7684;&#x82F1;&#x6587;&#x53E5;&#x5B50;"></div>
-        <div class="field"><label>&#x4E2D;&#x6587;</label><input type="text" id="cnInput" placeholder="&#x4E2D;&#x6587;&#x6CE8;&#x91CA;/&#x7FFB;&#x8BD1;"></div>
+        <div class="card-title">输入</div>
+        <div class="field"><label>语气</label><input type="text" id="toneInput" placeholder="如：开心、不爽、调侃"></div>
+        <div class="field"><label>英文</label><input type="text" id="enInput" value="Hello, world." placeholder="要显示的英文句子"></div>
+        <div class="field"><label>中文</label><input type="text" id="cnInput" value="你好，世界" placeholder="中文注释/翻译"></div>
       </div>
-
       <div class="card">
-        <div class="card-title">&#x8BED;&#x6C14;&#x6620;&#x5C04;</div>
-        <table class="tone-table">
-          <thead><tr><th>Tone</th><th>Emote ID</th></tr></thead>
-          <tbody id="toneBody"><tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">No mapping yet</td></tr></tbody>
-        </table>
-        <div class="tone-add-row">
-          <input type="text" id="toneNewKey" placeholder="New tone keyword">
-          <button class="btn" id="toneAddBtn">+ Add</button>
-        </div>
+        <div class="card-title">语气映射</div>
+        <table class="tone-table"><thead><tr><th>语气</th><th>表情 ID</th></tr></thead><tbody id="toneBody"><tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">暂无映射</td></tr></tbody></table>
+        <div class="tone-add-row"><input type="text" id="toneNewKey" placeholder="新语气关键词"><button class="btn" id="toneAddBtn">+ 添加</button></div>
       </div>
-
       <div class="card">
-        <div class="card-title">&#x8868;&#x60C5;&#x5305;</div>
+        <div class="card-title">表情包</div>
         <div class="emote-strip" id="emoteStrip"></div>
-        <div class="emote-hint"><strong>&#x63D0;&#x793A;&#xFF1A;</strong> &#x70B9;&#x51FB;&#x6BCF;&#x4E2A;&#x8868;&#x60C5;&#x69FD;&#x4F4D;&#x4E0A;&#x7684; + &#x6309;&#x94AE;&#x4E0A;&#x4F20;&#x81EA;&#x5B9A;&#x4E49;&#x56FE;&#x7247;</div>
+        <div class="emote-hint"><strong>提示：</strong>点击每个表情槽位上的 + 按钮上传自定义图片</div>
       </div>
     </div>
-
   </div>
 </div>
-
 <script>
-const API = window.location.origin;
+var API = window.location.origin;
 function hanaUrl(path) {
-  const tk = new URL(location.href).searchParams.get('token');
+  var tk = new URL(location.href).searchParams.get('token');
   return API + path + (tk ? '?token=' + encodeURIComponent(tk) : '');
 }
-
-const DEFAULT_THEME = {
+var DEFAULT_THEME = {
   primary:'#6aa7ff', secondary:'#b8d7ff', subColor:'#b0b0b0', bgColor:'#1a1a2e',
   font:"'Dancing Script','Brush Script MT',cursive", cnFont:'system-ui,sans-serif',
   enSize:'large', cnSize:'small'
 };
-
-let currentAgent = null;
-let agentsConfig = {};
-
+var currentAgent = null;
+var agentsConfig = {};
 window.addEventListener('error', function(e) {
   window.__initError = e.message || String(e);
   var el = document.getElementById('__initError');
@@ -352,7 +285,6 @@ window.addEventListener('unhandledrejection', function(e) {
   var el = document.getElementById('__initError');
   if (el) { el.textContent = '! ' + window.__initError; el.style.display = 'block'; }
 });
-
 function sendReady() {
   try { window.parent.postMessage({source:'hana-plugin',type:'ready'}, '*'); }
   catch(e) { console.error('ready error', e); }
@@ -361,7 +293,6 @@ sendReady();
 setTimeout(sendReady, 200);
 setTimeout(sendReady, 500);
 setTimeout(sendReady, 1000);
-
 async function init() {
   try {
     await loadConfig();
@@ -378,20 +309,13 @@ async function init() {
     sendReady();
   } catch(e) { window.__initError = (e && e.message) || String(e); }
 }
-
 async function loadConfig() {
-  try {
-    var r = await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/agents'));
-    agentsConfig = await r.json();
-  } catch(e) { agentsConfig = {}; }
+  try { var r = await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/agents')); agentsConfig = await r.json(); }
+  catch(e) { agentsConfig = {}; }
 }
-
 function renderTopbar() {
   var g = document.getElementById('agentGroup');
-  if (Object.keys(agentsConfig).length === 0) {
-    g.innerHTML = '<span style="font-size:10px;color:#555">Loading...</span>';
-    return;
-  }
+  if (Object.keys(agentsConfig).length === 0) { g.innerHTML = '<span style="font-size:10px;color:#555">加载中...</span>'; return; }
   g.innerHTML = Object.entries(agentsConfig).map(function(e) {
     var id = e[0], conf = e[1];
     var name = escHtml(conf.displayName || id);
@@ -403,7 +327,6 @@ function renderTopbar() {
     selectAgent(b.dataset.id);
   });
 }
-
 function selectAgent(id) {
   currentAgent = id;
   var conf = agentsConfig[id];
@@ -432,50 +355,47 @@ function selectAgent(id) {
   renderEmoteStrip(id);
   updatePreview();
 }
-
-function applyTheme(p, s, sb, f, gVal) {
+function applyTheme(p, s, sb, f, gVal, bg) {
   var r = document.documentElement;
   r.style.setProperty('--accent', p);
   r.style.setProperty('--accent2', s);
   r.style.setProperty('--sub', sb);
   r.style.setProperty('--font', f);
   r.style.setProperty('--glow', gVal);
+  if (bg) r.style.setProperty('--bg', bg);
   document.querySelectorAll('.btn-save').forEach(function(b) { b.style.background = p; });
 }
-
-function syncColorInputs(p, s, sb) {
+function syncColorInputs(p, s, sb, bg) {
   document.getElementById('colorPrimary').value = p;
   document.getElementById('colorPrimaryPicker').value = p;
   document.getElementById('colorSecondary').value = s;
   document.getElementById('colorSecondaryPicker').value = s;
   document.getElementById('colorSub').value = sb;
   document.getElementById('colorSubPicker').value = sb;
+  if (bg) { document.getElementById('colorBg').value = bg; document.getElementById('colorBgPicker').value = bg; }
 }
-
 function setupColorPickerSync() {
-  ['Primary','Secondary','Sub'].forEach(function(k) {
+  ['Primary','Secondary','Sub','Bg'].forEach(function(k) {
     var t = document.getElementById('color' + k);
     var p = document.getElementById('color' + k + 'Picker');
     t.addEventListener('input', function() { p.value = t.value; onColorChange(); });
     p.addEventListener('input', function() { t.value = p.value; onColorChange(); });
   });
 }
-
 function onColorChange() {
   var p = document.getElementById('colorPrimary').value;
   var s = document.getElementById('colorSecondary').value;
   var sb = document.getElementById('colorSub').value;
+  var bg = document.getElementById('colorBg').value;
   var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
-  applyTheme(p, s, sb, f, hexToRgba(p, 0.4));
+  applyTheme(p, s, sb, f, hexToRgba(p, 0.4), bg);
   updatePreview();
 }
-
 function hexToRgba(h, a) {
   if (!h || h.length < 7) return 'rgba(255,49,79,0.4)';
   var r = parseInt(h.slice(1,3), 16), g = parseInt(h.slice(3,5), 16), b = parseInt(h.slice(5,7), 16);
   return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
 }
-
 function renderFontBtns() {
   document.getElementById('fontGroup').addEventListener('click', function(e) {
     var b = e.target.closest('.btn'); if (!b) return;
@@ -483,11 +403,9 @@ function renderFontBtns() {
     updatePreview();
   });
 }
-
 function updateFontSelection(f) {
   document.querySelectorAll('#fontGroup .btn').forEach(function(b) { b.classList.toggle('active', b.dataset.font === f); });
 }
-
 function renderCnFontBtns() {
   document.getElementById('cnFontGroup').addEventListener('click', function(e) {
     var b = e.target.closest('.btn'); if (!b) return;
@@ -497,7 +415,6 @@ function renderCnFontBtns() {
     updatePreview();
   });
 }
-
 function renderDecoBtns() {
   document.getElementById('decoGroup').addEventListener('click', function(e) {
     var b = e.target.closest('.btn'); if (!b) return;
@@ -506,21 +423,14 @@ function renderDecoBtns() {
     updatePreview();
   });
 }
-
 function renderToneMap(agentId) {
   var conf = agentsConfig[agentId];
   var tbody = document.getElementById('toneBody');
   var map = (conf && conf.toneMap) ? conf.toneMap : {};
   var entries = Object.entries(map);
-  if (entries.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">No mapping yet</td></tr>';
-    return;
-  }
-  tbody.innerHTML = entries.map(function(e) {
-    return '<tr><td><input class="tone-key" value="' + escAttr(e[0]) + '"></td><td><input class="tone-val" value="' + escAttr(e[1]) + '"></td></tr>';
-  }).join('');
+  if (entries.length === 0) { tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">暂无映射</td></tr>'; return; }
+  tbody.innerHTML = entries.map(function(e) { return '<tr><td><input class="tone-key" value="' + escAttr(e[0]) + '"></td><td><input class="tone-val" value="' + escAttr(e[1]) + '"></td></tr>'; }).join('');
 }
-
 document.getElementById('toneAddBtn').addEventListener('click', function() {
   var key = document.getElementById('toneNewKey').value.trim();
   if (!key) return;
@@ -531,19 +441,14 @@ document.getElementById('toneAddBtn').addEventListener('click', function() {
   renderToneMap(currentAgent);
   updatePreview();
 });
-
 function collectToneMap() {
   var map = {};
   document.querySelectorAll('#toneBody tr').forEach(function(tr) {
     var inputs = tr.querySelectorAll('input');
-    if (inputs.length === 2) {
-      var k = inputs[0].value.trim(), v = inputs[1].value.trim();
-      if (k) map[k] = v || 'happy';
-    }
+    if (inputs.length === 2) { var k = inputs[0].value.trim(), v = inputs[1].value.trim(); if (k) map[k] = v || 'happy'; }
   });
   return map;
 }
-
 function renderEmoteStrip(agentId) {
   var conf = agentsConfig[agentId];
   var strip = document.getElementById('emoteStrip');
@@ -551,32 +456,19 @@ function renderEmoteStrip(agentId) {
   var agentToneMap = (agentsConfig[currentAgent] && agentsConfig[currentAgent].toneMap) ? agentsConfig[currentAgent].toneMap : {};
   var activeId = agentToneMap[tone] || Object.values(agentToneMap)[0] || 'happy';
   var toneIds = [...new Set(Object.values(agentToneMap))];
-  var emoteList = toneIds.length > 0
-    ? toneIds.map(function(id) { return {id:id, emoji:'🖼', label:id}; })
-    : [
-        {id:'happy', emoji:'😊', label:'happy'},
-        {id:'angry', emoji:'😤', label:'angry'},
-        {id:'smirk', emoji:'😏', label:'smirk'},
-        {id:'serious', emoji:'🤔', label:'serious'},
-        {id:'soft', emoji:'🤗', label:'soft'}
-      ];
+  var emoteList = toneIds.length > 0 ? toneIds.map(function(id) { return {id:id, emoji:'🖼', label:id}; }) : [{id:'happy', emoji:'😊', label:'开心'},{id:'angry', emoji:'😤', label:'不爽'},{id:'smirk', emoji:'😏', label:'调侃'},{id:'serious', emoji:'🤔', label:'认真'},{id:'soft', emoji:'🤗', label:'温柔'}];
   var emotes = (conf && conf.emotes) ? conf.emotes : {};
   strip.innerHTML = emoteList.map(function(e) {
     var active = e.id === activeId;
     var hasImg = emotes[e.id];
-    return '<div class="emote-slot' + (active ? ' active' : '') + '"' + (active ? ' style="border-color:var(--accent);color:var(--accent)"' : '') + '>'
-      + (hasImg ? '<img src="' + escAttr(API + '/' + emotes[e.id]) + '">' : '<span class="emoji">' + e.emoji + '</span>')
-      + '<input type="file" accept="image/png,image/jpeg" style="display:none" data-agent="' + escAttr(agentId) + '" data-tone="' + escAttr(e.id) + '">'
-      + '<span class="emote-upload" onclick="this.previousElementSibling.click()">+</span>'
-      + '</div>';
+    return '<div class="emote-slot' + (active ? ' active' : '') + '"' + (active ? ' style="border-color:var(--accent);color:var(--accent)"' : '') + '>' + (hasImg ? '<img src="' + escAttr(API + '/' + emotes[e.id]) + '">' : '<span class="emoji">' + e.emoji + '</span>') + '<input type="file" accept="image/png,image/jpeg" style="display:none" data-agent="' + escAttr(agentId) + '" data-tone="' + escAttr(e.id) + '"><span class="emote-upload" onclick="this.previousElementSibling.click()">+</span></div>';
   }).join('');
   strip.querySelectorAll('input[type="file"]').forEach(function(input) {
     input.addEventListener('change', async function(ev) {
       var file = ev.target.files[0];
       if (!file) return;
       var aid = input.dataset.agent, tid = input.dataset.tone;
-      var fd = new FormData();
-      fd.append('agentId', aid); fd.append('toneId', tid); fd.append('file', file);
+      var fd = new FormData(); fd.append('agentId', aid); fd.append('toneId', tid); fd.append('file', file);
       try {
         var r = await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/upload-emote'), {method:'POST', body:fd});
         var res = await r.json();
@@ -586,106 +478,64 @@ function renderEmoteStrip(agentId) {
     });
   });
 }
-
 document.getElementById('saveBtn').addEventListener('click', async function() {
   var p = document.getElementById('colorPrimary').value;
   var s = document.getElementById('colorSecondary').value;
   var sb = document.getElementById('colorSub').value;
+  var bg = document.getElementById('colorBg').value;
   var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
   var cnFont = document.querySelector('#cnFontGroup .btn.active') ? document.querySelector('#cnFontGroup .btn.active').dataset.cnfont : 'system-ui,sans-serif';
   var enSize = document.getElementById('enSizeSelect').value;
   var cnSize = document.getElementById('cnSizeSelect').value;
-
   if (!agentsConfig[currentAgent]) agentsConfig[currentAgent] = { displayName: (agentsConfig[currentAgent] && agentsConfig[currentAgent].displayName) || currentAgent, theme:{}, emotes:{}, toneMap:{} };
-  agentsConfig[currentAgent].theme = {
-    primary: p,
-    primaryGlow: hexToRgba(p, 0.4),
-    secondary: s,
-    font: f,
-    cnFont: cnFont,
-    enSize: enSize,
-    cnSize: cnSize,
-    subColor: sb,
-    bgColor: document.getElementById('colorBg').value,
-    deco: document.querySelector('#decoGroup .btn.active') ? document.querySelector('#decoGroup .btn.active').dataset.deco : '&#10048;'
-  };
+  agentsConfig[currentAgent].theme = { primary: p, primaryGlow: hexToRgba(p, 0.4), secondary: s, font: f, cnFont: cnFont, enSize: enSize, cnSize: cnSize, subColor: sb, bgColor: bg, deco: document.querySelector('#decoGroup .btn.active') ? document.querySelector('#decoGroup .btn.active').dataset.deco : '&#10048;' };
   agentsConfig[currentAgent].toneMap = collectToneMap();
   if (!agentsConfig[currentAgent].emotes) agentsConfig[currentAgent].emotes = {};
-
   try {
     var r = await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/save-config'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(agentsConfig)});
     var res = await r.json();
-    if (res.ok) {
-      showToast('Config saved');
-      await loadConfig();
-      renderEmoteStrip(currentAgent);
-      updatePreview();
-    } else {
-      showToast('Save failed: ' + (res.error || 'unknown'));
-    }
-  } catch(err) { showToast('Error: ' + err.message); }
+    if (res.ok) { showToast('配置已保存'); await loadConfig(); renderEmoteStrip(currentAgent); updatePreview(); }
+    else { showToast('保存失败: ' + (res.error || '未知')); }
+  } catch(err) { showToast('错误: ' + err.message); }
 });
-
 function setupEventListeners() {
-  ['toneInput','enInput','cnInput'].forEach(function(id) {
-    document.getElementById(id).addEventListener('input', updatePreview);
-  });
-  ['enSizeSelect','cnSizeSelect'].forEach(function(id) {
-    document.getElementById(id).addEventListener('change', updatePreview);
-  });
+  ['toneInput','enInput','cnInput'].forEach(function(id) { document.getElementById(id).addEventListener('input', updatePreview); });
+  ['enSizeSelect','cnSizeSelect'].forEach(function(id) { document.getElementById(id).addEventListener('change', updatePreview); });
 }
-
 function updatePreview() {
   var p = document.getElementById('colorPrimary').value;
   var s = document.getElementById('colorSecondary').value;
   var sb = document.getElementById('colorSub').value;
   var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
+  var cnF = document.querySelector('#cnFontGroup .btn.active') ? document.querySelector('#cnFontGroup .btn.active').dataset.cnfont : 'system-ui,sans-serif';
   var decoEl = document.querySelector('#decoGroup .btn.active');
   var deco = decoEl ? decoEl.dataset.deco : '&#10048;';
   var en = document.getElementById('enInput').value.trim();
   var cn = document.getElementById('cnInput').value.trim();
   var bubble = document.getElementById('bubble');
-
-
   var displayEn = en || 'Hello, world.';
   var displayCn = cn || '你好，世界';
   var gVal = hexToRgba(p, 0.4);
-
-  // rebuild bubble without font-family in innerHTML
-  bubble.innerHTML = '<p><span class="deco" style="color:' + s + ';font-size:24px">' + deco + '</span><span class="crystal" style="color:' + p + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + ';font-size:26px">' + escHtml(displayEn) + '</span></p><div style="color:' + sb + ';font-size:14px">' + escHtml(displayCn) + '</div>';
-  // apply Comic Sans via JS DOM API directly
-  var allSpans = bubble.querySelectorAll('span, div, p');
-  for (var i = 0; i < allSpans.length; i++) {
-    allSpans[i].style.fontFamily = 'Arial,Helvetica,sans-serif';
+  bubble.innerHTML = '<p><span class="deco" style="color:' + s + ';font-size:24px">' + deco + '</span><span class="crystal" style="color:' + p + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + ';font-size:26px">' + escHtml(displayEn) + '</span></p><div class="sub" style="color:' + sb + ';font-size:14px">' + escHtml(displayCn) + '</div>';
+  var allEls = bubble.querySelectorAll('*');
+  for (var i = 0; i < allEls.length; i++) {
+    var el = allEls[i];
+    if (el.classList.contains('crystal')) { el.style.fontFamily = f; }
+    else { el.style.fontFamily = cnF; }
   }
-
   var enSize = document.getElementById('enSizeSelect').value;
   var cnSize = document.getElementById('cnSizeSelect').value;
   document.getElementById('latexOut').textContent = '$${\\' + enSize + ' \\textcolor{' + s + '}{\\text{' + deco + '}} \\underset{\\textcolor{' + sb + '}{\\text{\\' + cnSize + ' ' + escLatex(displayCn) + '}}}{\\textcolor{' + p + '}{\\underline{\\mathscr{' + escLatex(displayEn) + '}}}}$$';
   document.getElementById('textOut').textContent = deco + ' ' + displayEn + '\n--- ' + displayCn;
-  renderEmoteStrip(currentAgent);
 }
-
 document.getElementById('copyLatex').addEventListener('click', function() { doCopy('latexOut'); });
 document.getElementById('copyText').addEventListener('click', function() { doCopy('textOut'); });
-
-function doCopy(id) {
-  var text = document.getElementById(id).textContent;
-  if (text === '等待输入') return;
-  navigator.clipboard.writeText(text).then(function() { showToast('Copied!'); });
-}
-
-function showToast(msg) {
-  var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(function() { t.remove(); }, 2000);
-}
-
+function doCopy(id) { var text = document.getElementById(id).textContent; if (text === '等待输入') return; navigator.clipboard.writeText(text).then(function() { showToast('已复制'); }); }
+function showToast(msg) { var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2000); }
 function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escStyle(s) { return String(s).replace(/["'`<>]/g,''); }
 function escLatex(s) { return String(s).replace(/\\/g,'\\textbackslash{}').replace(/_/g,'\\_').replace(/&/g,'\\&').replace(/%/g,'\\%').replace(/\$/g,'\\$').replace(/#/g,'\\#').replace(/{/g,'\\{').replace(/}/g,'\\}').replace(/~/g,'\\textasciitilde{}').replace(/\^/g,'\\textasciicircum{}'); }
-
 init();
 </script>
 </body>
