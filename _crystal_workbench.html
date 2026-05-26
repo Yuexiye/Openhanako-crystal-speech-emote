@@ -190,13 +190,14 @@ function selectAgent(id){
   document.getElementById('enSizeSelect').value=(theme&&theme.enSize)?theme.enSize:fontTheme.enSize
   document.getElementById('cnSizeSelect').value=(theme&&theme.cnSize)?theme.cnSize:fontTheme.cnSize
   if(theme&&theme.deco)document.querySelectorAll('#decoGroup .btn').forEach(function(b){b.classList.toggle('active',b.dataset.deco===theme.deco)})
-  var p=theme&&theme.primary?theme.primary:THEMES[activeTheme].primary
-  var s=theme&&theme.secondary?theme.secondary:THEMES[activeTheme].secondary
-  var sb=theme&&theme.subColor?theme.subColor:THEMES[activeTheme].sub
-  document.getElementById('colorPrimary').value=p;document.getElementById('colorPrimaryPicker').value=p
-  document.getElementById('colorSecondary').value=s;document.getElementById('colorSecondaryPicker').value=s
-  document.getElementById('colorSub').value=sb;document.getElementById('colorSubPicker').value=sb
-  applyCurrentTheme();updatePreview()
+  applyCurrentTheme()
+  var p=theme&&theme.primary?theme.primary:null
+  var s=theme&&theme.secondary?theme.secondary:null
+  var sb=theme&&theme.subColor?theme.subColor:null
+  if(p){document.getElementById('colorPrimary').value=p;document.getElementById('colorPrimaryPicker').value=p}
+  if(s){document.getElementById('colorSecondary').value=s;document.getElementById('colorSecondaryPicker').value=s}
+  if(sb){document.getElementById('colorSub').value=sb;document.getElementById('colorSubPicker').value=sb}
+  applyColors();updatePreview()
 }
 
 function renderToneMap(id){

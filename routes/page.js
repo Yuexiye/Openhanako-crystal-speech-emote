@@ -41,18 +41,25 @@ export default function (app, ctx) {
     }
   });
 
-  // ── 保存配置 ──
+  // ── 保存配置（合并写入，不覆盖其他助手） ──
   app.post('/api/save-config', async (c) => {
     try {
       const body = await c.req.json();
       if (!body || typeof body !== 'object' || Array.isArray(body) || Object.keys(body).length === 0) {
         return c.json({ ok: false, error: '配置格式无效' }, 400);
       }
-      const raw = JSON.stringify(body);
+      const agentsPath = path.join(pluginDir, 'data', 'agents.json');
+      // 读取现有配置
+      let existing = {};
+      try { existing = JSON.parse(fs.readFileSync(agentsPath, 'utf-8')); } catch {}
+      // 合并：只更新 body 中存在的助手
+      for (const [id, config] of Object.entries(body)) {
+        existing[id] = config;
+      }
+      const raw = JSON.stringify(existing);
       if (raw.length > 1024 * 1024) {
         return c.json({ ok: false, error: '配置过大（超过 1MB）' }, 400);
       }
-      const agentsPath = path.join(pluginDir, 'data', 'agents.json');
       fs.writeFileSync(agentsPath, raw, 'utf-8');
       return c.json({ ok: true });
     } catch (e) {
