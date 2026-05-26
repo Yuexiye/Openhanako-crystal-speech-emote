@@ -190,7 +190,7 @@ async function init(){
     await loadConfig()
     if(!currentAgent&&Object.keys(agentsConfig).length>0)currentAgent=Object.keys(agentsConfig)[0]
     renderTopbar();if(currentAgent)selectAgent(currentAgent)
-    applyCurrentTheme();updatePreview()
+    applyCurrentTheme();syncColorInputs();updatePreview()
     document.getElementById('fontGroup').addEventListener('click',function(e){var b=e.target.closest('.btn');if(b){document.querySelectorAll('#fontGroup .btn').forEach(function(x){x.classList.toggle('active',x.dataset.font===b.dataset.font)});updatePreview()}})
     document.getElementById('cnFontGroup').addEventListener('click',function(e){var b=e.target.closest('.btn');if(b){document.querySelectorAll('#cnFontGroup .btn').forEach(function(x){x.classList.remove('active')});b.classList.add('active');updatePreview()}})
     document.getElementById('decoGroup').addEventListener('click',function(e){var b=e.target.closest('.btn');if(b){document.querySelectorAll('#decoGroup .btn').forEach(function(x){x.classList.remove('active')});b.classList.add('active');updatePreview()}})
