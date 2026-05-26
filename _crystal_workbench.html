@@ -3,545 +3,182 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Pacifico&family=Alex+Brush&family=Tangerine:wght@400;700&family=Arizonia&family=Segoe+Script&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Liu+Jian+Mao+Cao&family=ZCOOL+QingKe+HuangYou&family=Noto+Serif+SC:wght@400;700&family=Long+Cang&family=ZCOOL+KuaiLe&display=swap" media="none" onload="if(this.media!=='all')this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Pacifico&family=Alex+Brush&family=Tangerine:wght@400;700&family=Arizonia&family=Segoe+Script&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Liu+Jian+Mao+Cao&family=ZCOOL+QingKe+HuangYou&family=Noto+Serif+SC:wght@400;700&family=Long+Cang&family=ZCOOL+KuaiLe&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Pacifico&family=Alex+Brush&family=Tangerine:wght@400;700&family=Arizonia&family=Segoe+Script&display=swap" media="none" onload="if(this.media!=='all')this.media='all'">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body {
-  height:100vh; overflow:hidden;
-  background:var(--bg,#1a1a2e); color:#ddd; font-family:system-ui,sans-serif;
-}
-.layout { display:flex; flex-direction:column; height:100vh; max-width:1400px; margin:0 auto; }
-.topbar {
-  flex-shrink:0; height:38px; padding:0 14px;
-  display:flex; align-items:center; gap:5px;
-  background:rgba(255,255,255,0.02);
-  border-bottom:1px solid rgba(255,255,255,0.05);
-}
-.topbar-label { font-size:10px; color:#666; letter-spacing:1px; margin-right:6px; }
-.preview-zone {
-  flex:0 0 auto; padding:10px 20px 6px;
-  border-bottom:1px solid rgba(255,255,255,0.04);
-}
-.bottom {
-  flex:1; display:flex; gap:12px; overflow:hidden;
-  padding:8px 20px 12px; min-height:0;
-}
-.panel {
-  flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:7px;
-  padding-right:6px;
-}
-.panel::-webkit-scrollbar { width:3px; }
-.panel::-webkit-scrollbar-track { background:transparent; }
-.panel::-webkit-scrollbar-thumb { background:#333; border-radius:2px; }
-.card {
-  background:rgba(255,255,255,0.04);
-  border-radius:10px; padding:8px 10px;
-}
-.card-title {
-  font-size:10px; color:#666; letter-spacing:1px;
-  margin-bottom:6px;
-}
-.btn-group { display:flex; flex-wrap:wrap; gap:4px; }
-.btn {
-  border:1px solid #3a3a4a; background:transparent; color:#999;
-  border-radius:7px; padding:3px 8px; font-size:11px; cursor:pointer;
-  transition:all .12s; white-space:nowrap;
-}
-.btn:hover { border-color:#666; color:#ccc; }
-.btn.active {
-  border-color:var(--accent,#ff314f); color:var(--accent,#ff314f);
-  background:color-mix(in srgb, var(--accent,#ff314f) 12%, transparent);
-}
-.agent-btn { padding:3px 10px; font-size:11px; }
-.agent-btn .dot {
-  display:inline-block; width:7px; height:7px;
-  border-radius:50%; margin-right:4px; vertical-align:middle;
-}
-.font-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
-.font-grid .btn {
-  padding:3px 6px; font-size:11px;
-  overflow:hidden; text-overflow:ellipsis;
-}
-.deco-strip { display:flex; gap:3px; flex-wrap:wrap; }
-.field { margin-bottom:4px; }
-.field label { display:block; font-size:9px; color:#666; margin-bottom:2px; }
-.field input, .field select, .field textarea {
-  width:100%; background:#16162a; border:1px solid #2a2a3a;
-  border-radius:6px; padding:4px 7px; font-size:12px; color:#ddd; outline:none;
-}
-.field input:focus, .field select:focus, .field textarea:focus {
-  border-color:var(--accent,#ff314f);
-}
-.field textarea { font-size:14px; resize:vertical; min-height:30px; }
-.color-row { display:flex; gap:4px; align-items:center; }
-.color-row .field { flex:1; margin-bottom:0; }
-.color-swatch { width:22px; height:22px; border-radius:5px; border:2px solid #3a3a4a; flex-shrink:0; overflow:hidden; }
-.color-swatch input[type="color"] { width:calc(100%+8px); height:calc(100%+8px); border:none; padding:0; margin:-4px; cursor:pointer; background:none; }
-.bubble {
-  background:rgba(255,255,255,0.03);
-  backdrop-filter:blur(6px);
-  border-radius:20px 20px 8px 20px;
-  border-left:4px solid var(--accent,#ff314f);
-  box-shadow:0 8px 32px rgba(0,0,0,.35), 0 0 50px color-mix(in srgb, var(--accent,#ff314f) 8%, transparent);
-  padding:20px 26px; min-height:100px; position:relative;
-}
-.bubble::after {
-  content:''; position:absolute; bottom:-6px; right:12px;
-  width:12px; height:12px; background:rgba(255,255,255,0.03);
-  clip-path:polygon(0 0, 0% 100%, 100% 0);
-}
-.bubble .ph { color:#555; text-align:center; padding:14px 0; font-size:12px; }
-.deco { color:var(--accent2,#ff8a9a); font-size:17px; margin-right:4px; }
-.crystal {
-  color:var(--accent,#ff314f);
-  font-size:24px; font-weight:600; font-style:italic;
-  letter-spacing:.5px; line-height:1.5;
-  text-decoration-line:underline; text-decoration-color:var(--accent,#ff314f);
-  text-decoration-thickness:1px; text-underline-offset:6px;
-  text-shadow:0 0 6px var(--glow,rgba(255,49,79,.35)),0 0 14px var(--glow,rgba(255,49,79,.15));
-}
-.sub {
-  color:var(--sub,#b0b0b0); font-size:13px; letter-spacing:.5px;
-  margin:3px 0 6px 0; padding-left:4px;
-}
-.sub::before { content:'---'; color:#666; }
-.output-strip { display:flex; gap:6px; margin-top:6px; }
-.output-strip > * { flex:1; min-width:0; display:flex; flex-direction:column; }
-.code-block {
-  background:#16162a; border:1px solid #2a2a3a; border-radius:6px;
-  padding:5px 8px; font-family:'Consolas',monospace; font-size:10px;
-  color:#7a7a9a; word-break:break-all; line-height:1.5;
-  max-height:36px; overflow:hidden;
-  white-space:nowrap;
-}
-.code-label { font-size:9px; color:#555; margin-bottom:2px; }
-.btn-save {
-  background:var(--accent,#ff314f); border:none; color:#fff;
-  padding:5px 10px; border-radius:6px; font-size:11px; cursor:pointer;
-  white-space:nowrap; margin-top:auto;
-}
-.btn-save:hover { opacity:.85; }
-.btn-copy {
-  background:#2a2a3a; border:none; color:#999;
-  padding:3px 7px; border-radius:4px; font-size:9px; cursor:pointer;
-  margin-top:2px; align-self:flex-start;
-}
-.btn-copy:hover { background:#3a3a5a; color:#ddd; }
-.tone-table { width:100%; border-collapse:collapse; margin:3px 0; }
-.tone-table td, .tone-table th {
-  border:1px solid #2a2a3a; padding:2px 5px; font-size:10px; color:#aaa; text-align:left;
-}
-.tone-table th { color:#666; font-weight:400; background:#16162a; }
-.tone-table input {
-  background:transparent; border:none; padding:1px 3px; font-size:10px; color:#ddd; width:100%; outline:none;
-}
-.tone-table input:focus { outline:1px solid var(--accent,#ff314f); border-radius:2px; }
-.tone-add-row { display:flex; gap:4px; margin-top:3px; }
-.tone-add-row input { flex:1; background:#16162a; border:1px solid #2a2a3a; border-radius:4px; padding:3px 6px; font-size:10px; color:#ddd; }
-.emote-strip { display:flex; gap:5px; flex-wrap:wrap; }
-.emote-slot {
-  width:44px; height:44px; border-radius:8px;
-  border:2px dashed #333; display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  font-size:8px; color:#555; position:relative; gap:1px;
-  transition:all .15s;
-}
-.emote-slot:hover { border-color:var(--accent,#ff314f); }
-.emote-slot .emoji { font-size:18px; }
-.emote-slot.active {
-  border-color:var(--accent,#ff314f); border-style:solid;
-  box-shadow:0 0 6px color-mix(in srgb, var(--accent,#ff314f) 20%, transparent);
-}
-.emote-slot img { width:100%; height:100%; border-radius:6px; object-fit:cover; }
-.emote-upload {
-  position:absolute; bottom:-2px; right:-2px;
-  width:15px; height:15px; border-radius:50%;
-  background:var(--accent,#ff314f); color:#fff;
-  font-size:8px; display:flex; align-items:center; justify-content:center;
-  cursor:pointer; line-height:1;
-}
-.emote-hint {
-  margin-top:4px; font-size:10px; color:#555;
-  background:#16162a; border-radius:6px; padding:6px 8px;
-  border:1px dashed #2a2a3a;
-}
-.toast {
-  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  background:#2a2a3a; border-left:3px solid var(--accent,#ff314f);
-  padding:8px 16px; border-radius:6px; font-size:11px; color:#ddd;
-  box-shadow:0 4px 16px rgba(0,0,0,.4);
-  animation:fadeInUp .25s ease; z-index:999;
-}
-@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(8px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100vh;overflow:hidden;background:var(--bg,#1a1a2e);color:var(--fg,#ddd);font-family:system-ui,sans-serif}
+.layout{display:flex;flex-direction:column;height:100vh;max-width:1400px;margin:0 auto}
+.topbar{flex-shrink:0;height:38px;padding:0 14px;display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.05)}
+.topbar-label{font-size:10px;color:#666;letter-spacing:1px;margin-right:6px}
+.preview-zone{flex:0 0 auto;padding:10px 20px 6px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.bottom{flex:1;display:flex;gap:12px;overflow:hidden;padding:8px 20px 12px;min-height:0}
+.panel{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:7px;padding-right:6px}
+.panel::-webkit-scrollbar{width:3px}
+.panel::-webkit-scrollbar-track{background:transparent}
+.panel::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+.card{background:rgba(255,255,255,0.04);border-radius:10px;padding:8px 10px}
+.card-title{font-size:10px;color:#666;letter-spacing:1px;margin-bottom:6px}
+.btn-group{display:flex;flex-wrap:wrap;gap:4px}
+.btn{border:1px solid #3a3a4a;background:transparent;color:#999;border-radius:7px;padding:3px 8px;font-size:11px;cursor:pointer;transition:all .12s;white-space:nowrap}
+.btn:hover{border-color:#666;color:#ccc}
+.btn.active{border-color:var(--accent,#ff314f);color:var(--accent,#ff314f);background:color-mix(in srgb,var(--accent,#ff314f) 12%,transparent)}
+.agent-btn{padding:3px 10px;font-size:11px}
+.agent-btn .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle}
+.font-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.font-grid .btn{padding:3px 6px;font-size:11px;overflow:hidden;text-overflow:ellipsis}
+.deco-strip{display:flex;gap:3px;flex-wrap:wrap}
+.field{margin-bottom:4px}
+.field label{display:block;font-size:9px;color:#666;margin-bottom:2px}
+.field input,.field select,.field textarea{width:100%;background:#16162a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;font-size:12px;color:#ddd;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent,#ff314f)}
+.field textarea{font-size:14px;resize:vertical;min-height:30px}
+.bubble{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);border-radius:20px 20px 8px 20px;border-left:4px solid var(--accent,#ff314f);box-shadow:0 8px 32px rgba(0,0,0,.35),0 0 50px color-mix(in srgb,var(--accent,#ff314f) 8%,transparent);padding:20px 26px;min-height:100px;position:relative}
+.bubble::after{content:'';position:absolute;bottom:-6px;right:12px;width:12px;height:12px;background:rgba(255,255,255,0.03);clip-path:polygon(0 0,0% 100%,100% 0)}
+.bubble .ph{color:#555;text-align:center;padding:14px 0;font-size:12px}
+.deco{color:var(--accent2,#ff8a9a);font-size:17px;margin-right:4px}
+.crystal{color:var(--accent,#ff314f);font-size:24px;font-weight:600;font-style:italic;letter-spacing:.5px;line-height:1.5;text-decoration-line:underline;text-decoration-color:var(--accent,#ff314f);text-decoration-thickness:1px;text-underline-offset:6px;text-shadow:0 0 6px var(--glow,rgba(255,49,79,.35)),0 0 14px var(--glow,rgba(255,49,79,.15))}
+.sub{color:var(--sub,#b0b0b0);font-size:13px;letter-spacing:.5px;margin:3px 0 6px 0;padding-left:4px}
+.sub::before{content:'---';color:#666}
+.output-strip{display:flex;gap:6px;margin-top:6px}
+.output-strip>*{flex:1;min-width:0;display:flex;flex-direction:column}
+.code-block{background:#16162a;border:1px solid #2a2a3a;border-radius:6px;padding:5px 8px;font-family:Consolas,monospace;font-size:10px;color:#7a7a9a;word-break:break-all;line-height:1.5;max-height:36px;overflow:hidden;white-space:nowrap}
+.code-label{font-size:9px;color:#555;margin-bottom:2px}
+.btn-save{background:var(--accent,#ff314f);border:none;color:#fff;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;white-space:nowrap;margin-top:auto}
+.btn-save:hover{opacity:.85}
+.btn-copy{background:#2a2a3a;border:none;color:#999;padding:3px 7px;border-radius:4px;font-size:9px;cursor:pointer;margin-top:2px;align-self:flex-start}
+.btn-copy:hover{background:#3a3a5a;color:#ddd}
+.tone-table{width:100%;border-collapse:collapse;margin:3px 0}
+.tone-table td,.tone-table th{border:1px solid #2a2a3a;padding:2px 5px;font-size:10px;color:#aaa;text-align:left}
+.tone-table th{color:#666;font-weight:400;background:#16162a}
+.tone-table input{background:transparent;border:none;padding:1px 3px;font-size:10px;color:#ddd;width:100%;outline:none}
+.tone-table input:focus{outline:1px solid var(--accent,#ff314f);border-radius:2px}
+.tone-add-row{display:flex;gap:4px;margin-top:3px}
+.tone-add-row input{flex:1;background:#16162a;border:1px solid #2a2a3a;border-radius:4px;padding:3px 6px;font-size:10px;color:#ddd}
+.emote-strip{display:flex;gap:5px;flex-wrap:wrap}
+.emote-slot{width:44px;height:44px;border-radius:8px;border:2px dashed #333;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;color:#555;position:relative;gap:1px;transition:all .15s}
+.emote-slot:hover{border-color:var(--accent,#ff314f)}
+.emote-slot .emoji{font-size:18px}
+.emote-slot.active{border-color:var(--accent,#ff314f);border-style:solid;box-shadow:0 0 6px color-mix(in srgb,var(--accent,#ff314f) 20%,transparent)}
+.emote-slot img{width:100%;height:100%;border-radius:6px;object-fit:cover}
+.emote-upload{position:absolute;bottom:-2px;right:-2px;width:15px;height:15px;border-radius:50%;background:var(--accent,#ff314f);color:#fff;font-size:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;line-height:1}
+.emote-hint{margin-top:4px;font-size:10px;color:#555;background:#16162a;border-radius:6px;padding:6px 8px;border:1px dashed #2a2a3a}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2a2a3a;border-left:3px solid var(--accent,#ff314f);padding:8px 16px;border-radius:6px;font-size:11px;color:#ddd;box-shadow:0 4px 16px rgba(0,0,0,.4);animation:fadeInUp .25s ease;z-index:999}
+@keyframes fadeInUp{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 </style>
 </head>
 <body>
 <div id="__initError" style="display:none;background:#ff314f;color:#fff;padding:8px 14px;font-size:12px;font-family:monospace"></div>
 <div class="layout">
-  <div class="topbar">
-    <span class="topbar-label">助手</span>
-    <div class="btn-group" id="agentGroup"></div>
-  </div>
-  <div class="preview-zone">
-    <div class="bubble" id="bubble"><div class="ph">编辑下方内容，实时预览花体效果</div></div>
-    <div class="output-strip">
-      <div><div class="code-label">LaTeX</div><div class="code-block" id="latexOut">等待输入</div><button class="btn-copy" id="copyLatex">复制</button></div>
-      <div><div class="code-label">纯文本</div><div class="code-block" id="textOut">等待输入</div><button class="btn-copy" id="copyText">复制</button></div>
-      <div><div class="code-label">&nbsp;</div><button class="btn-save" id="saveBtn">保存配置</button></div>
-    </div>
-  </div>
-  <div class="bottom">
-    <div class="panel">
-      <div class="card">
-        <div class="card-title">颜色</div>
-        <div class="color-row"><div class="field"><label>主题色</label><input type="text" id="colorPrimary" value="#ff314f"></div><div class="color-swatch"><input type="color" id="colorPrimaryPicker" value="#ff314f"></div></div>
-        <div class="color-row" style="margin-top:3px"><div class="field"><label>浅色</label><input type="text" id="colorSecondary" value="#ff8a9a"></div><div class="color-swatch"><input type="color" id="colorSecondaryPicker" value="#ff8a9a"></div></div>
-        <div class="color-row" style="margin-top:3px"><div class="field"><label>注释色</label><input type="text" id="colorSub" value="#b0b0b0"></div><div class="color-swatch"><input type="color" id="colorSubPicker" value="#b0b0b0"></div></div>
-        <div class="color-row" style="margin-top:3px"><div class="field"><label>背景色</label><input type="text" id="colorBg" value="#1a1a2e"></div><div class="color-swatch"><input type="color" id="colorBgPicker" value="#1a1a2e"></div></div>
-      </div>
-      <div class="card">
-        <div class="card-title">英文字体</div>
-        <div class="font-grid" id="fontGroup">
-          <button class="btn active" data-font="'Dancing Script','Brush Script MT',cursive">Dancing Script</button>
-          <button class="btn" data-font="'Great Vibes','Dancing Script',cursive">Great Vibes</button>
-          <button class="btn" data-font="'Pacifico',cursive">Pacifico</button>
-          <button class="btn" data-font="'Segoe Script','Brush Script MT',cursive">Segoe Script</button>
-          <button class="btn" data-font="'Alex Brush','Great Vibes',cursive">Alex Brush</button>
-          <button class="btn" data-font="'Tangerine',cursive">Tangerine</button>
-          <button class="btn" data-font="'Arizonia','Great Vibes',cursive">Arizonia</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">中文字体</div>
-        <div class="font-grid" id="cnFontGroup">
-          <button class="btn active" data-cnfont="system-ui,sans-serif">默认</button>
-          <button class="btn" data-cnfont="SimSun,serif">宋体</button>
-          <button class="btn" data-cnfont="SimHei,sans-serif">黑体</button>
-          <button class="btn" data-cnfont="KaiTi,serif">楷体</button>
-          <button class="btn" data-cnfont="'Microsoft YaHei',sans-serif">微软雅黑</button>
-          <button class="btn" data-cnfont="FangSong,serif">仿宋</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">字号 & 装饰</div>
-        <div style="display:flex;gap:6px">
-          <div class="field" style="flex:1"><label>英文字号</label><select id="enSizeSelect"><option value="tiny">极小</option><option value="small">小</option><option value="normalsize">正常</option><option value="large" selected>大</option><option value="LARGE">最大</option><option value="huge">超大</option></select></div>
-          <div class="field" style="flex:1"><label>中文字号</label><select id="cnSizeSelect"><option value="tiny">极小</option><option value="small" selected>小</option><option value="normalsize">正常</option><option value="large">大</option><option value="scriptsize">脚注</option></select></div>
-        </div>
-        <div class="card-title" style="margin-top:6px">装饰符</div>
-        <div class="btn-group" id="decoGroup">
-          <button class="btn active" data-deco="&#10048;">&#10048;</button>
-          <button class="btn" data-deco="&#10022;">&#10022;</button>
-          <button class="btn" data-deco="&#9825;">&#9825;</button>
-          <button class="btn" data-deco="&#9733;">&#9733;</button>
-          <button class="btn" data-deco="&#9830;">&#9830;</button>
-          <button class="btn" data-deco="&#9724;">&#9724;</button>
-          <button class="btn" data-deco="&#10084;">&#10084;</button>
-          <button class="btn" data-deco="&#9730;">&#9730;</button>
-        </div>
-      </div>
-    </div>
-    <div class="panel">
-      <div class="card">
-        <div class="card-title">输入</div>
-        <div class="field"><label>语气</label><input type="text" id="toneInput" placeholder="如：开心、不爽、调侃"></div>
-        <div class="field"><label>英文</label><input type="text" id="enInput" value="Hello, world." placeholder="要显示的英文句子"></div>
-        <div class="field"><label>中文</label><input type="text" id="cnInput" value="你好，世界" placeholder="中文注释/翻译"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">语气映射</div>
-        <table class="tone-table"><thead><tr><th>语气</th><th>表情 ID</th></tr></thead><tbody id="toneBody"><tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">暂无映射</td></tr></tbody></table>
-        <div class="tone-add-row"><input type="text" id="toneNewKey" placeholder="新语气关键词"><button class="btn" id="toneAddBtn">+ 添加</button></div>
-      </div>
-      <div class="card">
-        <div class="card-title">表情包</div>
-        <div class="emote-strip" id="emoteStrip"></div>
-        <div class="emote-hint"><strong>提示：</strong>点击每个表情槽位上的 + 按钮上传自定义图片</div>
-      </div>
-    </div>
-  </div>
+<div class="topbar"><span class="topbar-label">助手</span><div class="btn-group" id="agentGroup"></div></div>
+<div class="preview-zone">
+<div class="bubble" id="bubble"><div class="ph">编辑下方内容，实时预览花体效果</div></div>
+<div class="output-strip">
+<div><div class="code-label">LaTeX</div><div class="code-block" id="latexOut">等待输入</div><button class="btn-copy" id="copyLatex">复制</button></div>
+<div><div class="code-label">纯文本</div><div class="code-block" id="textOut">等待输入</div><button class="btn-copy" id="copyText">复制</button></div>
+<div><div class="code-label">&nbsp;</div><button class="btn-save" id="saveBtn">保存配置</button></div>
+</div></div>
+<div class="bottom">
+<div class="panel">
+<div class="card">
+<div class="card-title">模式</div>
+<div class="btn-group" id="themeGroup">
+<button class="btn active" data-theme="dark">深色模式</button>
+<button class="btn" data-theme="light">淡黄模式</button>
+</div></div>
+<div class="card">
+<div class="card-title">英文字体</div>
+<div class="font-grid" id="fontGroup">
+<button class="btn active" data-font="'Dancing Script','Brush Script MT',cursive">Dancing Script</button>
+<button class="btn" data-font="'Great Vibes','Dancing Script',cursive">Great Vibes</button>
+<button class="btn" data-font="'Pacifico',cursive">Pacifico</button>
+<button class="btn" data-font="'Segoe Script','Brush Script MT',cursive">Segoe Script</button>
+<button class="btn" data-font="'Alex Brush','Great Vibes',cursive">Alex Brush</button>
+<button class="btn" data-font="'Tangerine',cursive">Tangerine</button>
+<button class="btn" data-font="'Arizonia','Great Vibes',cursive">Arizonia</button>
+</div></div>
+<div class="card">
+<div class="card-title">中文字体</div>
+<div class="font-grid" id="cnFontGroup">
+<button class="btn active" data-cnfont="system-ui,sans-serif">默认</button>
+<button class="btn" data-cnfont="SimSun,serif">宋体</button>
+<button class="btn" data-cnfont="SimHei,sans-serif">黑体</button>
+<button class="btn" data-cnfont="KaiTi,serif">楷体</button>
+<button class="btn" data-cnfont="'Microsoft YaHei',sans-serif">微软雅黑</button>
+<button class="btn" data-cnfont="FangSong,serif">仿宋</button>
+</div></div>
+<div class="card">
+<div class="card-title">字号 &amp; 装饰</div>
+<div style="display:flex;gap:6px">
+<div class="field" style="flex:1"><label>英文</label><select id="enSizeSelect"><option value="tiny">极小</option><option value="small">小</option><option value="normalsize">正常</option><option value="large" selected>大</option><option value="LARGE">最大</option><option value="huge">超大</option></select></div>
+<div class="field" style="flex:1"><label>中文</label><select id="cnSizeSelect"><option value="tiny">极小</option><option value="small" selected>小</option><option value="normalsize">正常</option><option value="large">大</option><option value="scriptsize">脚注</option></select></div>
 </div>
+<div class="card-title" style="margin-top:6px">装饰符</div>
+<div class="btn-group" id="decoGroup">
+<button class="btn active" data-deco="&#10048;">&#10048;</button>
+<button class="btn" data-deco="&#10022;">&#10022;</button>
+<button class="btn" data-deco="&#9825;">&#9825;</button>
+<button class="btn" data-deco="&#9733;">&#9733;</button>
+<button class="btn" data-deco="&#9830;">&#9830;</button>
+<button class="btn" data-deco="&#9724;">&#9724;</button>
+<button class="btn" data-deco="&#10084;">&#10084;</button>
+<button class="btn" data-deco="&#9730;">&#9730;</button>
+</div></div></div>
+<div class="panel">
+<div class="card">
+<div class="card-title">输入</div>
+<div class="field"><label>语气</label><input type="text" id="toneInput" placeholder="如：开心、不爽、调侃"></div>
+<div class="field"><label>英文</label><input type="text" id="enInput" value="Hello, world." placeholder="要显示的英文句子"></div>
+<div class="field"><label>中文</label><input type="text" id="cnInput" value="你好，世界" placeholder="中文注释/翻译"></div>
+</div>
+<div class="card">
+<div class="card-title">语气映射</div>
+<table class="tone-table"><thead><tr><th>语气</th><th>表情ID</th></tr></thead><tbody id="toneBody"><tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">暂无映射</td></tr></tbody></table>
+<div class="tone-add-row"><input type="text" id="toneNewKey" placeholder="新语气关键词"><button class="btn" id="toneAddBtn">+添加</button></div>
+</div>
+<div class="card">
+<div class="card-title">表情包</div>
+<div class="emote-strip" id="emoteStrip"></div>
+<div class="emote-hint"><strong>提示：</strong>点击表情槽位上的 + 上传自定义图片</div>
+</div></div></div></div>
 <script>
-var API = window.location.origin;
-function hanaUrl(path) {
-  var tk = new URL(location.href).searchParams.get('token');
-  return API + path + (tk ? '?token=' + encodeURIComponent(tk) : '');
-}
-var DEFAULT_THEME = {
-  primary:'#6aa7ff', secondary:'#b8d7ff', subColor:'#b0b0b0', bgColor:'#1a1a2e',
-  font:"'Dancing Script','Brush Script MT',cursive", cnFont:'system-ui,sans-serif',
-  enSize:'large', cnSize:'small'
-};
-var currentAgent = null;
-var agentsConfig = {};
-window.addEventListener('error', function(e) {
-  window.__initError = e.message || String(e);
-  var el = document.getElementById('__initError');
-  if (el) { el.textContent = '! ' + window.__initError; el.style.display = 'block'; }
-});
-window.addEventListener('unhandledrejection', function(e) {
-  window.__initError = (e.reason && e.reason.message) || String(e.reason);
-  var el = document.getElementById('__initError');
-  if (el) { el.textContent = '! ' + window.__initError; el.style.display = 'block'; }
-});
-function sendReady() {
-  try { window.parent.postMessage({source:'hana-plugin',type:'ready'}, '*'); }
-  catch(e) { console.error('ready error', e); }
-}
-sendReady();
-setTimeout(sendReady, 200);
-setTimeout(sendReady, 500);
-setTimeout(sendReady, 1000);
-async function init() {
-  try {
-    await loadConfig();
-    if (!currentAgent && Object.keys(agentsConfig).length > 0) {
-      currentAgent = Object.keys(agentsConfig)[0];
-    }
-    renderTopbar();
-    renderFontBtns();
-    renderCnFontBtns();
-    renderDecoBtns();
-    setupColorPickerSync();
-    setupEventListeners();
-    if (currentAgent) selectAgent(currentAgent);
-    sendReady();
-  } catch(e) { window.__initError = (e && e.message) || String(e); }
-}
-async function loadConfig() {
-  try { var r = await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/agents')); agentsConfig = await r.json(); }
-  catch(e) { agentsConfig = {}; }
-}
-function renderTopbar() {
-  var g = document.getElementById('agentGroup');
-  if (Object.keys(agentsConfig).length === 0) { g.innerHTML = '<span style="font-size:10px;color:#555">加载中...</span>'; return; }
-  g.innerHTML = Object.entries(agentsConfig).map(function(e) {
-    var id = e[0], conf = e[1];
-    var name = escHtml(conf.displayName || id);
-    var accent = escStyle(conf.theme && conf.theme.primary ? conf.theme.primary : DEFAULT_THEME.primary);
-    return '<button class="btn agent-btn" data-id="' + escAttr(id) + '" style="--accent:' + accent + '"><span class="dot" style="background:' + accent + '"></span>' + name + '</button>';
-  }).join('');
-  g.addEventListener('click', function(e) {
-    var b = e.target.closest('.agent-btn'); if (!b) return;
-    selectAgent(b.dataset.id);
-  });
-}
-function selectAgent(id) {
-  currentAgent = id;
-  var conf = agentsConfig[id];
-  var theme = conf && conf.theme;
-  var dt = DEFAULT_THEME;
-  document.querySelectorAll('.agent-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.id === id); });
-  var p = theme && theme.primary ? theme.primary : dt.primary;
-  var s = theme && theme.secondary ? theme.secondary : dt.secondary;
-  var sb = theme && theme.subColor ? theme.subColor : dt.subColor;
-  var f = theme && theme.font ? theme.font : dt.font;
-  var gVal = theme && theme.primaryGlow ? theme.primaryGlow : hexToRgba(p, 0.4);
-  var bg = theme && theme.bgColor ? theme.bgColor : '#1a1a2e';
-  applyTheme(p, s, sb, f, gVal, bg);
-  syncColorInputs(p, s, sb, bg);
-  updateFontSelection(f);
-  if (theme && theme.cnFont) {
-    document.documentElement.style.setProperty('--cnfont', theme.cnFont);
-    document.querySelectorAll('#cnFontGroup .btn').forEach(function(b) { b.classList.toggle('active', b.dataset.cnfont === theme.cnFont); });
-  }
-  document.getElementById('enSizeSelect').value = (theme && theme.enSize) ? theme.enSize : dt.enSize;
-  document.getElementById('cnSizeSelect').value = (theme && theme.cnSize) ? theme.cnSize : dt.cnSize;
-  if (theme && theme.deco) {
-    document.querySelectorAll('#decoGroup .btn').forEach(function(b) { b.classList.toggle('active', b.dataset.deco === theme.deco); });
-  }
-  renderToneMap(id);
-  renderEmoteStrip(id);
-  updatePreview();
-}
-function applyTheme(p, s, sb, f, gVal, bg) {
-  var r = document.documentElement;
-  r.style.setProperty('--accent', p);
-  r.style.setProperty('--accent2', s);
-  r.style.setProperty('--sub', sb);
-  r.style.setProperty('--font', f);
-  r.style.setProperty('--glow', gVal);
-  if (bg) r.style.setProperty('--bg', bg);
-  document.querySelectorAll('.btn-save').forEach(function(b) { b.style.background = p; });
-}
-function syncColorInputs(p, s, sb, bg) {
-  document.getElementById('colorPrimary').value = p;
-  document.getElementById('colorPrimaryPicker').value = p;
-  document.getElementById('colorSecondary').value = s;
-  document.getElementById('colorSecondaryPicker').value = s;
-  document.getElementById('colorSub').value = sb;
-  document.getElementById('colorSubPicker').value = sb;
-  if (bg) { document.getElementById('colorBg').value = bg; document.getElementById('colorBgPicker').value = bg; }
-}
-function setupColorPickerSync() {
-  ['Primary','Secondary','Sub','Bg'].forEach(function(k) {
-    var t = document.getElementById('color' + k);
-    var p = document.getElementById('color' + k + 'Picker');
-    t.addEventListener('input', function() { p.value = t.value; onColorChange(); });
-    p.addEventListener('input', function() { t.value = p.value; onColorChange(); });
-  });
-}
-function onColorChange() {
-  var elP = document.getElementById('colorPrimary');
-  var elS = document.getElementById('colorSecondary');
-  var elSb = document.getElementById('colorSub');
-  var elBg = document.getElementById('colorBg');
-  var elFg = document.getElementById('colorFg');
-  if (!elP || !elS || !elSb) return;
-  var p = elP.value, s = elS.value, sb = elSb.value;
-  var bg = elBg ? elBg.value : '#1a1a2e';
-  var fg = elFg ? elFg.value : '#dddddd';
-  var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
-  applyTheme(p, s, sb, f, hexToRgba(p, 0.4), bg, fg);
-  updatePreview();
-}
-function hexToRgba(h, a) {
-  if (!h || h.length < 7) return 'rgba(255,49,79,0.4)';
-  var r = parseInt(h.slice(1,3), 16), g = parseInt(h.slice(3,5), 16), b = parseInt(h.slice(5,7), 16);
-  return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-}
-function renderFontBtns() {
-  document.getElementById('fontGroup').addEventListener('click', function(e) {
-    var b = e.target.closest('.btn'); if (!b) return;
-    updateFontSelection(b.dataset.font);
-    updatePreview();
-  });
-}
-function updateFontSelection(f) {
-  document.querySelectorAll('#fontGroup .btn').forEach(function(b) { b.classList.toggle('active', b.dataset.font === f); });
-}
-function renderCnFontBtns() {
-  document.getElementById('cnFontGroup').addEventListener('click', function(e) {
-    var b = e.target.closest('.btn'); if (!b) return;
-    document.querySelectorAll('#cnFontGroup .btn').forEach(function(btn) { btn.classList.remove('active'); });
-    b.classList.add('active');
-    document.documentElement.style.setProperty('--cnfont', b.dataset.cnfont);
-    updatePreview();
-  });
-}
-function renderDecoBtns() {
-  document.getElementById('decoGroup').addEventListener('click', function(e) {
-    var b = e.target.closest('.btn'); if (!b) return;
-    document.querySelectorAll('#decoGroup .btn').forEach(function(btn) { btn.classList.remove('active'); });
-    b.classList.add('active');
-    updatePreview();
-  });
-}
-function renderToneMap(agentId) {
-  var conf = agentsConfig[agentId];
-  var tbody = document.getElementById('toneBody');
-  var map = (conf && conf.toneMap) ? conf.toneMap : {};
-  var entries = Object.entries(map);
-  if (entries.length === 0) { tbody.innerHTML = '<tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">暂无映射</td></tr>'; return; }
-  tbody.innerHTML = entries.map(function(e) { return '<tr><td><input class="tone-key" value="' + escAttr(e[0]) + '"></td><td><input class="tone-val" value="' + escAttr(e[1]) + '"></td></tr>'; }).join('');
-}
-document.getElementById('toneAddBtn').addEventListener('click', function() {
-  var key = document.getElementById('toneNewKey').value.trim();
-  if (!key) return;
-  if (!agentsConfig[currentAgent]) agentsConfig[currentAgent] = { displayName: (agentsConfig[currentAgent] && agentsConfig[currentAgent].displayName) || currentAgent, theme:{}, emotes:{}, toneMap:{} };
-  if (!agentsConfig[currentAgent].toneMap) agentsConfig[currentAgent].toneMap = {};
-  agentsConfig[currentAgent].toneMap[key] = 'happy';
-  document.getElementById('toneNewKey').value = '';
-  renderToneMap(currentAgent);
-  updatePreview();
-});
-function collectToneMap() {
-  var map = {};
-  document.querySelectorAll('#toneBody tr').forEach(function(tr) {
-    var inputs = tr.querySelectorAll('input');
-    if (inputs.length === 2) { var k = inputs[0].value.trim(), v = inputs[1].value.trim(); if (k) map[k] = v || 'happy'; }
-  });
-  return map;
-}
-function renderEmoteStrip(agentId) {
-  var conf = agentsConfig[agentId];
-  var strip = document.getElementById('emoteStrip');
-  var tone = document.getElementById('toneInput').value;
-  var agentToneMap = (agentsConfig[currentAgent] && agentsConfig[currentAgent].toneMap) ? agentsConfig[currentAgent].toneMap : {};
-  var activeId = agentToneMap[tone] || Object.values(agentToneMap)[0] || 'happy';
-  var toneIds = [...new Set(Object.values(agentToneMap))];
-  var emoteList = toneIds.length > 0 ? toneIds.map(function(id) { return {id:id, emoji:'🖼', label:id}; }) : [{id:'happy', emoji:'😊', label:'开心'},{id:'angry', emoji:'😤', label:'不爽'},{id:'smirk', emoji:'😏', label:'调侃'},{id:'serious', emoji:'🤔', label:'认真'},{id:'soft', emoji:'🤗', label:'温柔'}];
-  var emotes = (conf && conf.emotes) ? conf.emotes : {};
-  strip.innerHTML = emoteList.map(function(e) {
-    var active = e.id === activeId;
-    var hasImg = emotes[e.id];
-    return '<div class="emote-slot' + (active ? ' active' : '') + '"' + (active ? ' style="border-color:var(--accent);color:var(--accent)"' : '') + '>' + (hasImg ? '<img src="' + escAttr(API + '/' + emotes[e.id]) + '">' : '<span class="emoji">' + e.emoji + '</span>') + '<input type="file" accept="image/png,image/jpeg" style="display:none" data-agent="' + escAttr(agentId) + '" data-tone="' + escAttr(e.id) + '"><span class="emote-upload" onclick="this.previousElementSibling.click()">+</span></div>';
-  }).join('');
-  strip.querySelectorAll('input[type="file"]').forEach(function(input) {
-    input.addEventListener('change', async function(ev) {
-      var file = ev.target.files[0];
-      if (!file) return;
-      var aid = input.dataset.agent, tid = input.dataset.tone;
-      var fd = new FormData(); fd.append('agentId', aid); fd.append('toneId', tid); fd.append('file', file);
-      try {
-        var r = await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/upload-emote'), {method:'POST', body:fd});
-        var res = await r.json();
-        if (res.ok) { showToast(tid + ' uploaded'); await loadConfig(); renderEmoteStrip(currentAgent); updatePreview(); }
-        else { showToast('Failed: ' + (res.error || 'unknown')); }
-      } catch(err) { showToast('Error: ' + err.message); }
-    });
-  });
-}
-document.getElementById('saveBtn').addEventListener('click', async function() {
-  var p = document.getElementById('colorPrimary').value;
-  var s = document.getElementById('colorSecondary').value;
-  var sb = document.getElementById('colorSub').value;
-  var bg = document.getElementById('colorBg').value;
-  var fg = document.getElementById('colorFg').value;
-  var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
-  var cnFont = document.querySelector('#cnFontGroup .btn.active') ? document.querySelector('#cnFontGroup .btn.active').dataset.cnfont : 'system-ui,sans-serif';
-  var enSize = document.getElementById('enSizeSelect').value;
-  var cnSize = document.getElementById('cnSizeSelect').value;
-  if (!agentsConfig[currentAgent]) agentsConfig[currentAgent] = { displayName: (agentsConfig[currentAgent] && agentsConfig[currentAgent].displayName) || currentAgent, theme:{}, emotes:{}, toneMap:{} };
-  agentsConfig[currentAgent].theme = { primary: p, primaryGlow: hexToRgba(p, 0.4), secondary: s, font: f, cnFont: cnFont, enSize: enSize, cnSize: cnSize, subColor: sb, bgColor: bg, deco: document.querySelector('#decoGroup .btn.active') ? document.querySelector('#decoGroup .btn.active').dataset.deco : '&#10048;' };
-  agentsConfig[currentAgent].toneMap = collectToneMap();
-  if (!agentsConfig[currentAgent].emotes) agentsConfig[currentAgent].emotes = {};
-  try {
-    var r = await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/save-config'), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(agentsConfig)});
-    var res = await r.json();
-    if (res.ok) { showToast('配置已保存'); await loadConfig(); renderEmoteStrip(currentAgent); updatePreview(); }
-    else { showToast('保存失败: ' + (res.error || '未知')); }
-  } catch(err) { showToast('错误: ' + err.message); }
-});
-function setupEventListeners() {
-  ['toneInput','enInput','cnInput'].forEach(function(id) { document.getElementById(id).addEventListener('input', updatePreview); });
-  ['enSizeSelect','cnSizeSelect'].forEach(function(id) { document.getElementById(id).addEventListener('change', updatePreview); });
-}
-function updatePreview() {
-  var p = document.getElementById('colorPrimary').value;
-  var s = document.getElementById('colorSecondary').value;
-  var sb = document.getElementById('colorSub').value;
-  var f = document.querySelector('#fontGroup .btn.active') ? document.querySelector('#fontGroup .btn.active').dataset.font : "'Dancing Script','Brush Script MT',cursive";
-  var cnF = document.querySelector('#cnFontGroup .btn.active') ? document.querySelector('#cnFontGroup .btn.active').dataset.cnfont : 'system-ui,sans-serif';
-  var decoEl = document.querySelector('#decoGroup .btn.active');
-  var deco = decoEl ? decoEl.dataset.deco : '&#10048;';
-  var en = document.getElementById('enInput').value.trim();
-  var cn = document.getElementById('cnInput').value.trim();
-  var bubble = document.getElementById('bubble');
-  var displayEn = en || 'Hello, world.';
-  var displayCn = cn || '你好，世界';
-  var gVal = hexToRgba(p, 0.4);
-  bubble.innerHTML = '<p><span class="deco" style="color:' + s + ';font-size:24px">' + deco + '</span><span class="crystal" style="color:' + p + ';text-shadow:0 0 4px ' + gVal + ',0 0 10px ' + gVal + ';font-size:26px">' + escHtml(displayEn) + '</span></p><div class="sub" style="color:' + sb + ';font-size:14px">' + escHtml(displayCn) + '</div>';
-  var allEls = bubble.querySelectorAll('*');
-  for (var i = 0; i < allEls.length; i++) {
-    var el = allEls[i];
-    if (el.classList.contains('crystal')) { el.style.fontFamily = f; }
-    else { el.style.fontFamily = cnF; }
-  }
-  var enSize = document.getElementById('enSizeSelect').value;
-  var cnSize = document.getElementById('cnSizeSelect').value;
-  document.getElementById('latexOut').textContent = '$${\\' + enSize + ' \\textcolor{' + s + '}{\\text{' + deco + '}} \\underset{\\textcolor{' + sb + '}{\\text{\\' + cnSize + ' ' + escLatex(displayCn) + '}}}{\\textcolor{' + p + '}{\\underline{\\mathscr{' + escLatex(displayEn) + '}}}}$$';
-  document.getElementById('textOut').textContent = deco + ' ' + displayEn + '\n--- ' + displayCn;
-}
-document.getElementById('copyLatex').addEventListener('click', function() { doCopy('latexOut'); });
-document.getElementById('copyText').addEventListener('click', function() { doCopy('textOut'); });
-function doCopy(id) { var text = document.getElementById(id).textContent; if (text === '等待输入') return; navigator.clipboard.writeText(text).then(function() { showToast('已复制'); }); }
-function showToast(msg) { var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2000); }
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function escAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function escStyle(s) { return String(s).replace(/["'`<>]/g,''); }
-function escLatex(s) { return String(s).replace(/\\/g,'\\textbackslash{}').replace(/_/g,'\\_').replace(/&/g,'\\&').replace(/%/g,'\\%').replace(/\$/g,'\\$').replace(/#/g,'\\#').replace(/{/g,'\\{').replace(/}/g,'\\}').replace(/~/g,'\\textasciitilde{}').replace(/\^/g,'\\textasciicircum{}'); }
+var API=window.location.origin;
+function hanaUrl(p){var t=new URL(location.href).searchParams.get('token');return API+p+(t?'?token='+encodeURIComponent(t):'')}
+var THEMES={dark:{bg:'#1a1a2e',fg:'#ddd',primary:'#6aa7ff',secondary:'#b8d7ff',sub:'#b0b0b0'},light:{bg:'#f5f0dc',fg:'#333',primary:'#b08060',secondary:'#d4b896',sub:'#666'}};
+var activeTheme='dark';
+var fontTheme={font:"'Dancing Script','Brush Script MT',cursive",cnFont:'system-ui,sans-serif',enSize:'large',cnSize:'small'};
+var currentAgent=null,agentsConfig={};
+window.addEventListener('error',function(e){window.__initError=e.message||String(e);var el=document.getElementById('__initError');if(el){el.textContent='! '+window.__initError;el.style.display='block'}});
+window.addEventListener('unhandledrejection',function(e){window.__initError=(e.reason&&e.reason.message)||String(e.reason);var el=document.getElementById('__initError');if(el){el.textContent='! '+window.__initError;el.style.display='block'}});
+function sendReady(){try{window.parent.postMessage({source:'hana-plugin',type:'ready'},'*')}catch(e){}}
+sendReady();setTimeout(sendReady,200);setTimeout(sendReady,500);setTimeout(sendReady,1000);
+function applyCurrentTheme(){var t=THEMES[activeTheme]||THEMES.dark;var r=document.documentElement;r.style.setProperty('--bg',t.bg);r.style.setProperty('--fg',t.fg);r.style.setProperty('--accent',t.primary);r.style.setProperty('--accent2',t.secondary);r.style.setProperty('--sub',t.sub);r.style.setProperty('--glow','rgba('+parseInt(t.primary.slice(1,3),16)+','+parseInt(t.primary.slice(3,5),16)+','+parseInt(t.primary.slice(5,7),16)+',0.4)');document.querySelectorAll('.btn-save').forEach(function(b){b.style.background=t.primary})}
+async function init(){try{await loadConfig();if(!currentAgent&&Object.keys(agentsConfig).length>0)currentAgent=Object.keys(agentsConfig)[0];renderTopbar();renderFontBtns();renderCnFontBtns();renderDecoBtns();setupThemeBtns();setupEventListeners();if(currentAgent)selectAgent(currentAgent);sendReady()}catch(e){window.__initError=(e&&e.message)||String(e)}}
+async function loadConfig(){try{var r=await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/agents'));agentsConfig=await r.json()}catch(e){agentsConfig={}}}
+function renderTopbar(){var g=document.getElementById('agentGroup');if(Object.keys(agentsConfig).length===0){g.innerHTML='<span style="font-size:10px;color:#555">加载中...</span>';return}
+g.innerHTML=Object.entries(agentsConfig).map(function(e){var id=e[0],conf=e[1],name=escHtml(conf.displayName||id),accent=escStyle(conf.theme&&conf.theme.primary?conf.theme.primary:'#6aa7ff');return'<button class="btn agent-btn" data-id="'+escAttr(id)+'" style="--accent:'+accent+'"><span class="dot" style="background:'+accent+'"></span>'+name+'</button>'}).join('');g.addEventListener('click',function(e){var b=e.target.closest('.agent-btn');if(!b)return;selectAgent(b.dataset.id)})}
+function selectAgent(id){currentAgent=id;var conf=agentsConfig[id],theme=conf&&conf.theme,ft=fontTheme;document.querySelectorAll('.agent-btn').forEach(function(b){b.classList.toggle('active',b.dataset.id===id)});var f=theme&&theme.font?theme.font:ft.font;updateFontSelection(f);if(theme&&theme.cnFont){document.documentElement.style.setProperty('--cnfont',theme.cnFont);document.querySelectorAll('#cnFontGroup .btn').forEach(function(b){b.classList.toggle('active',b.dataset.cnfont===theme.cnFont)})}
+document.getElementById('enSizeSelect').value=(theme&&theme.enSize)?theme.enSize:ft.enSize;document.getElementById('cnSizeSelect').value=(theme&&theme.cnSize)?theme.cnSize:ft.cnSize;if(theme&&theme.deco)document.querySelectorAll('#decoGroup .btn').forEach(function(b){b.classList.toggle('active',b.dataset.deco===theme.deco)});renderToneMap(id);renderEmoteStrip(id);applyCurrentTheme();updatePreview()}
+function renderFontBtns(){document.getElementById('fontGroup').addEventListener('click',function(e){var b=e.target.closest('.btn');if(!b)return;updateFontSelection(b.dataset.font);updatePreview()})}
+function updateFontSelection(f){document.querySelectorAll('#fontGroup .btn').forEach(function(b){b.classList.toggle('active',b.dataset.font===f)})}
+function renderCnFontBtns(){document.getElementById('cnFontGroup').addEventListener('click',function(e){var b=e.target.closest('.btn');if(!b)return;document.querySelectorAll('#cnFontGroup .btn').forEach(function(btn){btn.classList.remove('active')});b.classList.add('active');document.documentElement.style.setProperty('--cnfont',b.dataset.cnfont);updatePreview()})}
+function renderDecoBtns(){document.getElementById('decoGroup').addEventListener('click',function(e){var b=e.target.closest('.btn');if(!b)return;document.querySelectorAll('#decoGroup .btn').forEach(function(btn){btn.classList.remove('active')});b.classList.add('active');updatePreview()})}
+function setupThemeBtns(){document.getElementById('themeGroup').addEventListener('click',function(e){var b=e.target.closest('.btn');if(!b)return;document.querySelectorAll('#themeGroup .btn').forEach(function(btn){btn.classList.remove('active')});b.classList.add('active');activeTheme=b.dataset.theme;applyCurrentTheme();if(currentAgent)updatePreview()})}
+function renderToneMap(a){var c=agentsConfig[a],m=c&&c.toneMap?c.toneMap:{},t=document.getElementById('toneBody'),e=Object.entries(m);if(!e.length){t.innerHTML='<tr><td colspan="2" style="text-align:center;color:#555;font-size:10px">暂无映射</td></tr>';return}
+t.innerHTML=e.map(function(e){return'<tr><td><input class="tone-key" value="'+escAttr(e[0])+'"></td><td><input class="tone-val" value="'+escAttr(e[1])+'"></td></tr>'}).join('')}
+document.getElementById('toneAddBtn').addEventListener('click',function(){var k=document.getElementById('toneNewKey').value.trim();if(!k)return;if(!agentsConfig[currentAgent])agentsConfig[currentAgent]={displayName:(agentsConfig[currentAgent]&&agentsConfig[currentAgent].displayName)||currentAgent,theme:{},emotes:{},toneMap:{}};if(!agentsConfig[currentAgent].toneMap)agentsConfig[currentAgent].toneMap={};agentsConfig[currentAgent].toneMap[k]='happy';document.getElementById('toneNewKey').value='';renderToneMap(currentAgent);updatePreview()});
+function collectToneMap(){var m={};document.querySelectorAll('#toneBody tr').forEach(function(t){var i=t.querySelectorAll('input');if(i.length===2){var k=i[0].value.trim(),v=i[1].value.trim();if(k)m[k]=v||'happy'}});return m}
+function renderEmoteStrip(a){var c=agentsConfig[a],s=document.getElementById('emoteStrip'),t=document.getElementById('toneInput').value,atm=agentsConfig[currentAgent]&&agentsConfig[currentAgent].toneMap?agentsConfig[currentAgent].toneMap:{},aid=atm[t]||Object.values(atm)[0]||'happy',tids=[...new Set(Object.values(atm))],el=tids.length>0?tids.map(function(i){return{id:i,emoji:'🖼',label:i}}):[{id:'happy',emoji:'😊',label:'开心'},{id:'angry',emoji:'😤',label:'不爽'},{id:'smirk',emoji:'😏',label:'调侃'},{id:'serious',emoji:'🤔',label:'认真'},{id:'soft',emoji:'🤗',label:'温柔'}],em=c&&c.emotes?c.emotes:{};s.innerHTML=el.map(function(e){var a=e.id===aid,h=em[e.id];return'<div class="emote-slot'+(a?' active':'')+'"'+(a?' style="border-color:var(--accent);color:var(--accent)"':'')+'>'+(h?'<img src="'+escAttr(API+'/'+em[e.id])+'">':'<span class="emoji">'+e.emoji+'</span>')+'<input type="file" accept="image/png,image/jpeg" style="display:none" data-agent="'+escAttr(a)+'" data-tone="'+escAttr(e.id)+'"><span class="emote-upload" onclick="this.previousElementSibling.click()">+</span></div>'}).join('');s.querySelectorAll('input[type="file"]').forEach(function(i){i.addEventListener('change',async function(ev){var f=ev.target.files[0];if(!f)return;var aid=i.dataset.agent,tid=i.dataset.tone,fd=new FormData();fd.append('agentId',aid);fd.append('toneId',tid);fd.append('file',f);try{var r=await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/upload-emote'),{method:'POST',body:fd});var res=await r.json();if(res.ok){showToast(tid+' uploaded');await loadConfig();renderEmoteStrip(currentAgent);updatePreview()}else showToast('Failed: '+(res.error||'unknown'))}catch(err){showToast('Error: '+err.message)}})})
+document.getElementById('saveBtn').addEventListener('click',async function(){var f=document.querySelector('#fontGroup .btn.active')?document.querySelector('#fontGroup .btn.active').dataset.font:fontTheme.font,cnF=document.querySelector('#cnFontGroup .btn.active')?document.querySelector('#cnFontGroup .btn.active').dataset.cnfont:'system-ui,sans-serif',enS=document.getElementById('enSizeSelect').value,cnS=document.getElementById('cnSizeSelect').value;if(!agentsConfig[currentAgent])agentsConfig[currentAgent]={displayName:(agentsConfig[currentAgent]&&agentsConfig[currentAgent].displayName)||currentAgent,theme:{},emotes:{},toneMap:{}};agentsConfig[currentAgent].theme={font:f,cnFont:cnF,enSize:enS,cnSize:cnS,deco:document.querySelector('#decoGroup .btn.active')?document.querySelector('#decoGroup .btn.active').dataset.deco:'&#10048;'};agentsConfig[currentAgent].toneMap=collectToneMap();if(!agentsConfig[currentAgent].emotes)agentsConfig[currentAgent].emotes={};try{var r=await fetch(hanaUrl('/api/plugins/crystal-speech-emote/api/save-config'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(agentsConfig)});var res=await r.json();if(res.ok){showToast('配置已保存');await loadConfig();renderEmoteStrip(currentAgent);updatePreview()}else showToast('保存失败: '+(res.error||'未知'))}catch(err){showToast('错误: '+err.message)}})
+function setupEventListeners(){['toneInput','enInput','cnInput'].forEach(function(i){document.getElementById(i).addEventListener('input',updatePreview)});['enSizeSelect','cnSizeSelect'].forEach(function(i){document.getElementById(i).addEventListener('change',updatePreview)})}
+function updatePreview(){var p=THEMES[activeTheme]?THEMES[activeTheme].primary:'#6aa7ff',s=THEMES[activeTheme]?THEMES[activeTheme].secondary:'#b8d7ff',sb=THEMES[activeTheme]?THEMES[activeTheme].sub:'#b0b0b0',f=document.querySelector('#fontGroup .btn.active')?document.querySelector('#fontGroup .btn.active').dataset.font:fontTheme.font,cnF=document.querySelector('#cnFontGroup .btn.active')?document.querySelector('#cnFontGroup .btn.active').dataset.cnfont:'system-ui,sans-serif',decoEl=document.querySelector('#decoGroup .btn.active'),deco=decoEl?decoEl.dataset.deco:'&#10048;',en=document.getElementById('enInput').value.trim(),cn=document.getElementById('cnInput').value.trim(),bubble=document.getElementById('bubble'),displayEn=en||'Hello, world.',displayCn=cn||'你好，世界',gVal='rgba('+parseInt(p.slice(1,3),16)+','+parseInt(p.slice(3,5),16)+','+parseInt(p.slice(5,7),16)+',0.4)';bubble.innerHTML='<p><span class="deco" style="color:'+s+';font-size:24px">'+deco+'</span><span class="crystal" style="color:'+p+';text-shadow:0 0 4px '+gVal+',0 0 10px '+gVal+';font-size:26px">'+escHtml(displayEn)+'</span></p><div class="sub" style="color:'+sb+';font-size:14px">'+escHtml(displayCn)+'</div>';var allEls=bubble.querySelectorAll('*');for(var i=0;i<allEls.length;i++){var el=allEls[i];if(el.classList.contains('crystal'))el.style.fontFamily=f;else el.style.fontFamily=cnF}
+var enSize=document.getElementById('enSizeSelect').value,cnSize=document.getElementById('cnSizeSelect').value;document.getElementById('latexOut').textContent='$${\\'+enSize+' \\textcolor{'+s+'}{\\text{'+deco+'}} \\underset{\\textcolor{'+sb+'}{\\text{\\'+cnSize+' '+escLatex(displayCn)+'}}}{\\textcolor{'+p+'}{\\underline{\\mathscr{'+escLatex(displayEn)+'}}}}$$';document.getElementById('textOut').textContent=deco+' '+displayEn+'\n--- '+displayCn}
+document.getElementById('copyLatex').addEventListener('click',function(){doCopy('latexOut')});document.getElementById('copyText').addEventListener('click',function(){doCopy('textOut')})
+function doCopy(i){var t=document.getElementById(i).textContent;if(t==='等待输入')return;navigator.clipboard.writeText(t).then(function(){showToast('已复制')})}
+function showToast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2000)}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function escAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function escStyle(s){return String(s).replace(/["'`<>]/g,'')}
+function escLatex(s){return String(s).replace(/\\/g,'\\textbackslash{}').replace(/_/g,'\\_').replace(/&/g,'\\&').replace(/%/g,'\\%').replace(/\$/g,'\\$').replace(/#/g,'\\#').replace(/{/g,'\\{').replace(/}/g,'\\}').replace(/~/g,'\\textasciitilde{}').replace(/\^/g,'\\textasciicircum{}')}
 init();
 </script>
 </body>
